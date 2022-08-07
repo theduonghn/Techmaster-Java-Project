@@ -5,6 +5,10 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 
+/*
+Create this entity to add column `quantity`.
+Many to many with additional column
+ */
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor

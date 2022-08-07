@@ -1,5 +1,6 @@
 package vn.techmaster.bookonline.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 import org.hibernate.Hibernate;
 import org.hibernate.annotations.GenericGenerator;
@@ -24,7 +25,8 @@ public class Address {
     @Column(name = "address", nullable = false)
     private String address;
 
-    @ManyToOne(optional = false)
+    @JsonBackReference
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 

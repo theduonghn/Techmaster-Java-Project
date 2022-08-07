@@ -47,7 +47,7 @@ public class FileService {
         // Create path of file
         File fileServer = new File(employerLogoPath + "/" + id);
         try {
-            // Sử dụng Buffer để lưu dữ liệu
+            // Use Buffer to store data
             BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(fileServer));
             stream.write(file.getBytes());
             stream.close();

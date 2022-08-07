@@ -1,13 +1,19 @@
 package vn.techmaster.bookonline.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.vladmihalcea.hibernate.type.json.JsonStringType;
 import lombok.*;
 import org.hibernate.Hibernate;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -18,6 +24,7 @@ import java.util.Set;
 @Setter
 @Entity
 @Table(name = "users")
+@TypeDef(name = "json", typeClass = JsonStringType.class)
 public class User {
     @Id
     @Column(name = "id", nullable = false)
@@ -47,6 +54,10 @@ public class User {
     @Column(name = "dob")
     private LocalDate dob;
 
+    @Type(type = "json")
+    @Column(name = "roles", columnDefinition = "json")
+    private List<String> roles;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
     private Status status;
@@ -68,17 +79,15 @@ public class User {
         this.updatedAt = LocalDateTime.now();
     }
 
+    @JsonManagedReference
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Address> addresses = new LinkedHashSet<>();
 
+    @JsonManagedReference
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "main_address_id")
     private Address mainAddress;
-
-    @ManyToMany
-    @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Role> roles = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "user")
     private Set<Comment> comments = new LinkedHashSet<>();
