@@ -1,31 +1,24 @@
 package vn.techmaster.bookonline.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import vn.techmaster.bookonline.model.User;
 import vn.techmaster.bookonline.service.UserService;
 
-import java.util.List;
 import java.util.UUID;
 
-@RestController
-@RequestMapping("/api/v1/users")
-public class UserRestController {
+@Controller
+@RequestMapping("/users")
+public class UserController {
     @Autowired
     private UserService userService;
 
-    // Find by id
     @GetMapping("/{id}")
-    public User findById(@PathVariable("id") UUID id) {
-        return userService.findById(id);
-    }
-
-    // Find all
-    @GetMapping()
-    public List<User> findAll() {
-        return userService.findAll();
+    public String showUserDetail(Model model, @PathVariable("id") UUID id) {
+        model.addAttribute("user", userService.findById(id));
+        return "user";
     }
 }

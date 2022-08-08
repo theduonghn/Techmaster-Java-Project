@@ -1,6 +1,5 @@
 package vn.techmaster.bookonline.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.vladmihalcea.hibernate.type.json.JsonStringType;
 import lombok.*;
@@ -12,10 +11,7 @@ import org.hibernate.annotations.TypeDef;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @Builder
 @AllArgsConstructor
@@ -23,14 +19,15 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
-@Table(name = "users")
+@Table(name = "user")
 @TypeDef(name = "json", typeClass = JsonStringType.class)
 public class User {
     @Id
-    @Column(name = "id", nullable = false)
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "org.hibernate.id.UUIDGenerator")
-    private String id;
+    @GeneratedValue(generator = "uuid2")
+    @GenericGenerator(name = "uuid2", strategy = "uuid2")
+    @Column(name = "id", updatable = false, nullable = false, columnDefinition = "VARCHAR(36)")
+    @Type(type="org.hibernate.type.UUIDCharType")
+    private UUID id;
 
     @Column(name = "username", nullable = false, unique = true, updatable = false)
     private String username;
@@ -80,7 +77,6 @@ public class User {
     }
 
     @JsonManagedReference
-
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Address> addresses = new LinkedHashSet<>();
 

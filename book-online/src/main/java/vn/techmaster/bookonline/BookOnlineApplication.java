@@ -16,6 +16,6 @@ public class BookOnlineApplication implements ApplicationRunner {
 	}
 
 	public void run(ApplicationArguments args) throws Exception {
-		dataInitializer.initData(); // Comment this line when run tests
+		dataInitializer.initData();
 	}
 }

@@ -7,6 +7,7 @@ import vn.techmaster.bookonline.model.User;
 import vn.techmaster.bookonline.repository.UserRepository;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class UserService {
@@ -14,7 +15,7 @@ public class UserService {
     private UserRepository userRepository;
 
     // Find by id
-    public User findById(String id) {
+    public User findById(UUID id) {
         return userRepository.findById(id).orElseThrow(() -> new NotFoundException("No user with id = " + id));
     }
 
@@ -34,7 +35,7 @@ public class UserService {
     }
 
     // Delete by id
-    public void delete(String id) {
+    public void delete(UUID id) {
         userRepository.deleteById(id);
     }
 }

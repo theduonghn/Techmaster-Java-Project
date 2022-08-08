@@ -11,6 +11,7 @@ import vn.techmaster.bookonline.model.User;
 import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -36,7 +37,7 @@ public class UserRepositoryTest {
                 .build();
         userRepository.save(testUser);
         User savedUser = userRepository.save(testUser);
-        String id = savedUser.getId();
+        UUID id = savedUser.getId();
         User foundedUser = userRepository.findById(id).orElseThrow(() -> new NotFoundException("Test failed"));
         assertThat(foundedUser.getId()).isEqualTo(id);
     }
