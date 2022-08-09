@@ -1,10 +1,12 @@
-package vn.techmaster.bookonline.model;
+package vn.techmaster.bookonline.entitiy;
 
 import lombok.*;
+import org.hibernate.Hibernate;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Builder
 @AllArgsConstructor
@@ -12,16 +14,16 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Entity
-@Table(name = "rating")
-public class Rating {
+@Table(name = "comment")
+public class Comment {
     @Id
     @Column(name = "id", nullable = false)
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "org.hibernate.id.UUIDGenerator")
     private String id;
 
-    @Column(name = "point", nullable = false)
-    private Integer point;
+    @Column(name = "content", nullable = false)
+    private String content;
 
     @Column(name = "created_at", columnDefinition = "TIMESTAMP")
     private LocalDateTime createdAt;
@@ -36,4 +38,19 @@ public class Rating {
     @ManyToOne(optional = false)
     @JoinColumn(name = "book_id", nullable = false)
     private Book book;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o))
+            return false;
+        Comment comment = (Comment) o;
+        return id != null && Objects.equals(id, comment.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }

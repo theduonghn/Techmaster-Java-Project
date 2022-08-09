@@ -1,12 +1,10 @@
 package vn.techmaster.bookonline.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import vn.techmaster.bookonline.model.Address;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+import vn.techmaster.bookonline.dto.AddressDto;
+import vn.techmaster.bookonline.entitiy.Address;
 import vn.techmaster.bookonline.service.AddressService;
 
 import java.util.List;
@@ -25,13 +23,26 @@ public class AddressRestController {
 
     // Find all
     @GetMapping()
-    public List<Address> findAll() {
-        return addressService.findAll();
+    public List<AddressDto> findAll() {
+        return addressService.findAllDto();
     }
 
     // Add instance
+    @PostMapping
+    public Address add(@RequestBody AddressDto addressDto) {
+        return addressService.add(addressDto);
+    }
 
     // Update instance
+    @PutMapping("/{id}")
+    public Address update(@RequestBody AddressDto addressDto, @PathVariable("id") String id) {
+        return addressService.update(addressDto);
+    }
 
     // Delete by id
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteById(@PathVariable("id") String id) {
+        addressService.deleteById(id);
+    }
 }

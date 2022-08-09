@@ -1,4 +1,4 @@
-package vn.techmaster.bookonline.model;
+package vn.techmaster.bookonline.entitiy;
 
 import lombok.*;
 import org.hibernate.Hibernate;

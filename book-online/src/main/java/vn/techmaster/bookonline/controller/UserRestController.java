@@ -5,11 +5,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import vn.techmaster.bookonline.model.User;
+import vn.techmaster.bookonline.entitiy.User;
 import vn.techmaster.bookonline.service.UserService;
 
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/users")
@@ -19,7 +18,7 @@ public class UserRestController {
 
     // Find by id
     @GetMapping("/{id}")
-    public User findById(@PathVariable("id") UUID id) {
+    public User findById(@PathVariable("id") String id) {
         return userService.findById(id);
     }
 

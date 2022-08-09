@@ -1,37 +1,35 @@
-package vn.techmaster.bookonline.model;
+package vn.techmaster.bookonline.entitiy;
 
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
-/*
-Create this entity to add column `quantity`.
-Many to many with additional column
- */
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @Entity
-@Table(name = "order_book")
-public class OrderBook {
+@Table(name = "price")
+public class Price {
     @Id
     @Column(name = "id", nullable = false)
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "org.hibernate.id.UUIDGenerator")
     private String id;
+
     @ManyToOne(optional = false)
     @JoinColumn(name = "book_id", nullable = false)
     private Book book;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "order_id", nullable = false)
-    private Order order;
+    @Column(name = "price", nullable = false)
+    private Long price;
 
-    @Setter(AccessLevel.NONE)
-    @Column(name = "quantity", nullable = false, updatable = false)
-    private Integer quantity;
+    @Column(name = "start_at", columnDefinition = "TIMESTAMP")
+    private LocalDateTime createdAt;
 
+    @Column(name = "end_at", columnDefinition = "TIMESTAMP")
+    private LocalDateTime updatedAt;
 }

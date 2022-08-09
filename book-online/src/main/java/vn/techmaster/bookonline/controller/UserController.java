@@ -8,8 +8,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import vn.techmaster.bookonline.service.UserService;
 
-import java.util.UUID;
-
 @Controller
 @RequestMapping("/users")
 public class UserController {
@@ -17,7 +15,7 @@ public class UserController {
     private UserService userService;
 
     @GetMapping("/{id}")
-    public String showUserDetail(Model model, @PathVariable("id") UUID id) {
+    public String showUserDetail(Model model, @PathVariable("id") String id) {
         model.addAttribute("user", userService.findById(id));
         return "user";
     }

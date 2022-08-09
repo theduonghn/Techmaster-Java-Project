@@ -1,4 +1,4 @@
-package vn.techmaster.bookonline.model;
+package vn.techmaster.bookonline.entitiy;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.vladmihalcea.hibernate.type.json.JsonStringType;
@@ -23,11 +23,10 @@ import java.util.*;
 @TypeDef(name = "json", typeClass = JsonStringType.class)
 public class User {
     @Id
-    @GeneratedValue(generator = "uuid2")
-    @GenericGenerator(name = "uuid2", strategy = "uuid2")
-    @Column(name = "id", updatable = false, nullable = false, columnDefinition = "VARCHAR(36)")
-    @Type(type="org.hibernate.type.UUIDCharType")
-    private UUID id;
+    @Column(name = "id", nullable = false)
+    @GeneratedValue(generator = "uuid")
+    @GenericGenerator(name = "uuid", strategy = "org.hibernate.id.UUIDGenerator")
+    private String id;
 
     @Column(name = "username", nullable = false, unique = true, updatable = false)
     private String username;

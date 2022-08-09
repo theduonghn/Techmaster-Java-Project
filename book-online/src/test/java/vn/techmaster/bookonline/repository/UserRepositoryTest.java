@@ -4,14 +4,13 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import vn.techmaster.bookonline.exception.NotFoundException;
-import vn.techmaster.bookonline.model.Gender;
-import vn.techmaster.bookonline.model.Status;
-import vn.techmaster.bookonline.model.User;
+import vn.techmaster.bookonline.entitiy.Gender;
+import vn.techmaster.bookonline.entitiy.Status;
+import vn.techmaster.bookonline.entitiy.User;
 
 import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -36,8 +35,8 @@ public class UserRepositoryTest {
                 .roles(List.of("customer"))
                 .build();
         userRepository.save(testUser);
-        User savedUser = userRepository.save(testUser);
-        UUID id = savedUser.getId();
+        userRepository.save(testUser);
+        String id = testUser.getId();
         User foundedUser = userRepository.findById(id).orElseThrow(() -> new NotFoundException("Test failed"));
         assertThat(foundedUser.getId()).isEqualTo(id);
     }

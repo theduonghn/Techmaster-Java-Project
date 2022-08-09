@@ -1,4 +1,4 @@
-package vn.techmaster.bookonline.model;
+package vn.techmaster.bookonline.entitiy;
 
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
@@ -13,8 +13,8 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
-@Table(name = "publishing_company")
-public class PublishingCompany {
+@Table(name = "category")
+public class Category {
     @Id
     @Column(name = "id", nullable = false)
     @GeneratedValue(generator = "uuid")
@@ -24,6 +24,8 @@ public class PublishingCompany {
     @Column(name = "name", nullable = false, unique = true)
     private String name;
 
-    @OneToMany(mappedBy = "publishingCompany", orphanRemoval = true)
+    @ManyToMany
+    @JoinTable(name = "category_book", joinColumns = @JoinColumn(name = "category_id"),
+            inverseJoinColumns = @JoinColumn(name = "book_id"))
     private Set<Book> books = new LinkedHashSet<>();
 }

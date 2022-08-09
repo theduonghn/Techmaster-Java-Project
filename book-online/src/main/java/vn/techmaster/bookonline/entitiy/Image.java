@@ -1,4 +1,4 @@
-package vn.techmaster.bookonline.model;
+package vn.techmaster.bookonline.entitiy;
 
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
@@ -12,24 +12,22 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Entity
-@Table(name = "price")
-public class Price {
+@Table(name = "image")
+public class Image {
     @Id
     @Column(name = "id", nullable = false)
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "org.hibernate.id.UUIDGenerator")
     private String id;
 
+    @Column(name = "path", nullable = false, unique = true)
+    private String path;
+
+    @Column(name = "created_at", columnDefinition = "TIMESTAMP")
+    private LocalDateTime createdAt;
+
     @ManyToOne(optional = false)
     @JoinColumn(name = "book_id", nullable = false)
     private Book book;
 
-    @Column(name = "price", nullable = false)
-    private Long price;
-
-    @Column(name = "start_at", columnDefinition = "TIMESTAMP")
-    private LocalDateTime createdAt;
-
-    @Column(name = "end_at", columnDefinition = "TIMESTAMP")
-    private LocalDateTime updatedAt;
 }

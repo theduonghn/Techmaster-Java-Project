@@ -1,4 +1,4 @@
-package vn.techmaster.bookonline.model;
+package vn.techmaster.bookonline.entitiy;
 
 public enum PaymentStatus {
     UNPAID, PAID, REFUSED, REFUNDED

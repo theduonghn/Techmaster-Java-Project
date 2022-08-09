@@ -1,10 +1,10 @@
 package vn.techmaster.bookonline;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import vn.techmaster.bookonline.model.Address;
-import vn.techmaster.bookonline.model.Gender;
-import vn.techmaster.bookonline.model.Status;
-import vn.techmaster.bookonline.model.User;
+import vn.techmaster.bookonline.entitiy.Address;
+import vn.techmaster.bookonline.entitiy.Gender;
+import vn.techmaster.bookonline.entitiy.Status;
+import vn.techmaster.bookonline.entitiy.User;
 import vn.techmaster.bookonline.repository.AddressRepository;
 import vn.techmaster.bookonline.repository.UserRepository;
 
