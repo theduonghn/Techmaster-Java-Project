@@ -1,6 +1,5 @@
 package vn.techmaster.bookonline.entitiy;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.vladmihalcea.hibernate.type.json.JsonStringType;
 import lombok.*;
 import org.hibernate.Hibernate;
@@ -11,7 +10,10 @@ import org.hibernate.annotations.TypeDef;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 
 @Builder
 @AllArgsConstructor
@@ -50,6 +52,12 @@ public class User {
     @Column(name = "dob")
     private LocalDate dob;
 
+    @Column(name = "home_address")
+    private String homeAddress;
+
+    @Column(name = "work_address")
+    private String workAddress;
+
     @Type(type = "json")
     @Column(name = "roles", columnDefinition = "json")
     private List<String> roles;
@@ -74,15 +82,6 @@ public class User {
     public void preUpdate() {
         this.updatedAt = LocalDateTime.now();
     }
-
-    @JsonManagedReference
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Address> addresses = new LinkedHashSet<>();
-
-    @JsonManagedReference
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "main_address_id")
-    private Address mainAddress;
 
     @OneToMany(mappedBy = "user")
     private Set<Comment> comments = new LinkedHashSet<>();

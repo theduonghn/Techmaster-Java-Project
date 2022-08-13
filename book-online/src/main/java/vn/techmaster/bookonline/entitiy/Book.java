@@ -42,6 +42,9 @@ public class Book {
     @Column(name = "description")
     private String description;
 
+    @Column(name = "price")
+    private Long price;
+
     @Column(name = "created_at", columnDefinition = "TIMESTAMP")
     private LocalDateTime createdAt;
 
@@ -56,9 +59,6 @@ public class Book {
 
     @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Rating> ratings = new LinkedHashSet<>();
-
-    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Price> prices = new LinkedHashSet<>();
 
     @ManyToMany(mappedBy = "books")
     private Set<Category> categories = new LinkedHashSet<>();

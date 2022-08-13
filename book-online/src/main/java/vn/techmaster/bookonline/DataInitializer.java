@@ -1,11 +1,8 @@
 package vn.techmaster.bookonline;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import vn.techmaster.bookonline.entitiy.Address;
-import vn.techmaster.bookonline.entitiy.Gender;
-import vn.techmaster.bookonline.entitiy.Status;
-import vn.techmaster.bookonline.entitiy.User;
-import vn.techmaster.bookonline.repository.AddressRepository;
+import vn.techmaster.bookonline.entitiy.*;
+import vn.techmaster.bookonline.repository.AuthorRepository;
 import vn.techmaster.bookonline.repository.UserRepository;
 
 import javax.transaction.Transactional;
@@ -14,13 +11,13 @@ import java.util.List;
 
 public class DataInitializer {
     @Autowired
-    private AddressRepository addressRepository;
+    private AuthorRepository authorRepository;
     @Autowired
     private UserRepository userRepository;
 
     @Transactional
     public void initData() {
-        // Create users
+        // Begin create users
         User admin = User.builder()
                 .username("admin")
                 .email("admin@gmail.com")
@@ -85,24 +82,28 @@ public class DataInitializer {
                 .roles(List.of("customer"))
                 .build();
         userRepository.save(customer2);
+        // End create users
 
-        // Create addresses
-        Address address1Admin = Address.builder()
-                .address("address 1 admin")
-                .user(admin)
+        // Begin create authors
+        Author author1 = Author.builder()
+                .fullName("Author 1")
+                .gender(Gender.FEMALE)
+                .address("Address author 1")
+                .yearOfBirth(1980)
+                .yearOfDeath(null)
+                .books(null)
                 .build();
-        addressRepository.save(address1Admin);
+        authorRepository.save(author1);
 
-        Address address1Seller1 = Address.builder()
-                .address("address 1 seller 1")
-                .user(seller1)
+        Author author2 = Author.builder()
+                .fullName("Author 2")
+                .gender(Gender.MALE)
+                .address("Address author 2")
+                .yearOfBirth(1771)
+                .yearOfDeath(1853)
+                .books(null)
                 .build();
-        addressRepository.save(address1Seller1);
-
-        Address address2Seller1 = Address.builder()
-                .address("address 2 seller 1")
-                .user(seller1)
-                .build();
-        addressRepository.save(address2Seller1);
+        authorRepository.save(author2);
+        // End create authors
     }
 }

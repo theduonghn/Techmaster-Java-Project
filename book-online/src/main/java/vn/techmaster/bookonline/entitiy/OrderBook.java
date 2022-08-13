@@ -6,7 +6,7 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 
 /*
-Create this entity to add column `quantity`.
+Create this entity to add columns `price` and `quantity`.
 Many to many with additional column
  */
 @Builder
@@ -30,7 +30,9 @@ public class OrderBook {
     @JoinColumn(name = "order_id", nullable = false)
     private Order order;
 
-    @Setter(AccessLevel.NONE)
+    @Column(name = "price", nullable = false, updatable = false)
+    private Long price;
+
     @Column(name = "quantity", nullable = false, updatable = false)
     private Integer quantity;
 
