@@ -12,11 +12,11 @@ import vn.techmaster.bookonline.service.FileService;
 @RestController
 @RequestMapping("/")
 @AllArgsConstructor
-public class FileController {
+public class FileRestController {
     private FileService fileService;
 
-    @GetMapping(value = "upload/employer_logo/{id}", produces = MediaType.IMAGE_JPEG_VALUE)
-    public byte[] readEmployerLogo(@PathVariable String id) {
-        return fileService.readEmployerLogo(id);
+    @GetMapping(value = "upload/book-thumbnails/{imageName}", produces = MediaType.IMAGE_JPEG_VALUE)
+    public byte[] readImage(@PathVariable("imageName") String imageName) {
+        return fileService.readImage(imageName);
     }
 }

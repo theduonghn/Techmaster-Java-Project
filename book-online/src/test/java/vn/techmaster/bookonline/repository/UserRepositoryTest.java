@@ -31,7 +31,7 @@ class UserRepositoryTest {
                 .fullName("test")
                 .gender(Gender.FEMALE)
                 .dob(LocalDate.now().minusYears(20))
-                .status(Status.NORMAL)
+                .status(Status.ACTIVE)
                 .roles(List.of("customer"))
                 .build();
         userRepository.save(testUser);

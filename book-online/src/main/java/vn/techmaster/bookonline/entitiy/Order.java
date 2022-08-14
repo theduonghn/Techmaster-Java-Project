@@ -2,7 +2,9 @@ package vn.techmaster.bookonline.entitiy;
 
 import lombok.*;
 import org.hibernate.Hibernate;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -40,16 +42,13 @@ public class Order {
     @Column(name = "payment_status", nullable = false)
     private PaymentStatus paymentStatus;
 
+    @CreationTimestamp
     @Column(name = "created_at", columnDefinition = "TIMESTAMP")
     private LocalDateTime createdAt;
 
+    @UpdateTimestamp
     @Column(name = "updated_at", columnDefinition = "TIMESTAMP")
     private LocalDateTime updatedAt;
-
-    @ManyToMany
-    @JoinTable(name = "order_voucher", joinColumns = @JoinColumn(name = "order_id"),
-            inverseJoinColumns = @JoinColumn(name = "voucher_id"))
-    private Set<Voucher> vouchers = new LinkedHashSet<>();
 
     @ManyToMany
     @JoinTable(name = "order_shipper", joinColumns = @JoinColumn(name = "order_id"),

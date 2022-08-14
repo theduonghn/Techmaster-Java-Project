@@ -22,7 +22,7 @@ import vn.techmaster.bookonline.util.Utils;
 public class FileService {
     // Folder path to upload file
     private final Path rootPath = Paths.get("upload");
-    private final Path employerLogoPath = rootPath.resolve("employer_logo");
+    private final Path bookThumbnailsPath = rootPath.resolve("book-thumbnails");
 
     public FileService() {
         createFolder(rootPath.toString());
@@ -39,13 +39,13 @@ public class FileService {
     // Upload file
     public String uploadEmployerLogo(String id, MultipartFile file) {
         // Create employer logo path if not exist
-        createFolder(employerLogoPath.toString());
+        createFolder(bookThumbnailsPath.toString());
 
         // Validate file
         validate(file);
 
         // Create path of file
-        File fileServer = new File(employerLogoPath + "/" + id);
+        File fileServer = new File(bookThumbnailsPath + "/" + id);
         try {
             // Use Buffer to store data
             BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(fileServer));
@@ -71,20 +71,20 @@ public class FileService {
             throw new BadRequestException("Invalid file");
         }
 
-        // Kiểm tra size (upload dưới 2MB)
+        // Check file size (upload below 2MB)
         if ((double) file.getSize() > (2 * 1024 * 1024)) {
             throw new BadRequestException("File must not excess 2MB");
         }
     }
 
     // Read logo
-    public byte[] readEmployerLogo(String id) {
-        // Lấy đường dẫn file tương ứng với id
-        Path path = employerLogoPath.resolve(id);
+    public byte[] readImage(String imageName) {
+        // Get file path
+        Path path = bookThumbnailsPath.resolve(imageName);
 
-        // Kiểm tra path có tồn tại hay không
+        // Check if file path exists
         if (!Files.exists(path)) {
-            throw new StorageException("Errors occur while reading file " + id);
+            throw new StorageException("Errors occur while reading file " + imageName);
         }
 
         try {
@@ -96,19 +96,19 @@ public class FileService {
                 inputStream.close(); // Remember to close InputStream
                 return byteArray;
             } else {
-                throw new StorageException("Errors occur while reading file " + id);
+                throw new StorageException("Errors occur while reading file " + imageName);
             }
         } catch (Exception e) {
-            throw new StorageException("Errors occur while reading file " + id);
+            throw new StorageException("Errors occur while reading file " + imageName);
         }
     }
 
-    // Delete logo
-    public void deleteLogo(String logoPath) {
+    // Delete image
+    public void deleteImage(String imagePath) {
         try {
-            Files.deleteIfExists(Paths.get(logoPath));
+            Files.deleteIfExists(Paths.get(imagePath));
         } catch (IOException e) {
-            throw new StorageException("Errors occur while deleting file " + logoPath);
+            throw new StorageException("Errors occur while deleting file " + imagePath);
         }
     }
 }

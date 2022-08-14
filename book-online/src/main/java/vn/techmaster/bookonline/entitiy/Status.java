@@ -1,5 +1,5 @@
 package vn.techmaster.bookonline.entitiy;
 
 public enum Status {
-    NORMAL, LOCKED
+    INACTIVE, ACTIVE, LOCKED, DELETED
 }

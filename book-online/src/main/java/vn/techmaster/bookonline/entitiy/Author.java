@@ -3,15 +3,7 @@ package vn.techmaster.bookonline.entitiy;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -38,7 +30,7 @@ public class Author {
     @Column(name = "full_name", nullable = false)
     private String fullName;
 
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     @Column(name = "gender", nullable = false)
     private Gender gender;
 
@@ -51,8 +43,6 @@ public class Author {
     @Column(name = "year_of_death")
     private Integer yearOfDeath;
 
-    @ManyToMany
-    @JoinTable(name = "author_book", joinColumns = @JoinColumn(name = "author_id"),
-            inverseJoinColumns = @JoinColumn(name = "book_id"))
+    @ManyToMany(mappedBy = "authors")
     private Set<Book> books = new LinkedHashSet<>();
 }

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>PHPJabbers.com | Free Book Online Store Website Template</title>
+    <title>Book Online</title>
     <meta charset="utf-8" />
     <meta
       name="viewport"
@@ -18,7 +18,7 @@
       <!-- Main -->
       <div id="main">
         <div class="inner">
-          <h1>Products</h1>
+          <h1>Books</h1>
 
           <div class="image main">
             <img
@@ -30,94 +30,26 @@
 
           <!-- Products -->
           <section class="tiles">
-            <article class="style1">
+            <article
+              th:each="book : ${books}"
+              th:class="|style${#numbers.formatDecimal(T(java.lang.Math).floor(T(java.lang.Math).random()*6) + 1,1,0)}|"
+            >
               <span class="image">
-                <img th:src="@{/images/product-1-720x480.jpg}" alt="" />
+                <img th:src="|/${book.thumbnail}|" alt="" />
               </span>
               <a th:href="book-details">
-                <h2>Lorem ipsum dolor sit amet, consectetur</h2>
-
-                <p><del>$19.00</del> <strong>$19.00</strong></p>
+                <h2 th:text="${book.name}">
+                  Lorem ipsum dolor sit amet, consectetur
+                </h2>
 
                 <p>
-                  Vestibulum id est eu felis vulputate hendrerit uspendisse
-                  dapibus turpis in
+                  <strong
+                    th:text="|${#numbers.formatInteger(book.price, 3, 'COMMA')} đ|"
+                    >$19.00</strong
+                  >
                 </p>
-              </a>
-            </article>
-            <article class="style2">
-              <span class="image">
-                <img src="images/product-2-720x480.jpg" alt="" />
-              </span>
-              <a href="product-details.html">
-                <h2>Lorem ipsum dolor sit amet, consectetur</h2>
 
-                <p><del>$19.00</del> <strong>$19.00</strong></p>
-
-                <p>
-                  Vestibulum id est eu felis vulputate hendrerit uspendisse
-                  dapibus turpis in
-                </p>
-              </a>
-            </article>
-            <article class="style3">
-              <span class="image">
-                <img src="images/product-3-720x480.jpg" alt="" />
-              </span>
-              <a href="product-details.html">
-                <h2>Lorem ipsum dolor sit amet, consectetur</h2>
-
-                <p><del>$19.00</del> <strong>$19.00</strong></p>
-
-                <p>
-                  Vestibulum id est eu felis vulputate hendrerit uspendisse
-                  dapibus turpis in
-                </p>
-              </a>
-            </article>
-
-            <article class="style4">
-              <span class="image">
-                <img src="images/product-4-720x480.jpg" alt="" />
-              </span>
-              <a href="product-details.html">
-                <h2>Lorem ipsum dolor sit amet, consectetur</h2>
-
-                <p><del>$19.00</del> <strong>$19.00</strong></p>
-
-                <p>
-                  Vestibulum id est eu felis vulputate hendrerit uspendisse
-                  dapibus turpis in
-                </p>
-              </a>
-            </article>
-
-            <article class="style5">
-              <span class="image">
-                <img src="images/product-5-720x480.jpg" alt="" />
-              </span>
-              <a href="product-details.html">
-                <h2>Lorem ipsum dolor sit amet, consectetur</h2>
-
-                <p><del>$19.00</del> <strong>$19.00</strong></p>
-
-                <p>
-                  Vestibulum id est eu felis vulputate hendrerit uspendisse
-                  dapibus turpis in
-                </p>
-              </a>
-            </article>
-
-            <article class="style6">
-              <span class="image">
-                <img src="images/product-6-720x480.jpg" alt="" />
-              </span>
-              <a href="product-details.html">
-                <h2>Lorem ipsum dolor sit amet, consectetur</h2>
-
-                <p><del>$19.00</del> <strong>$19.00</strong></p>
-
-                <p>
+                <p th:text="${#strings.abbreviate(book.description, 100)}">
                   Vestibulum id est eu felis vulputate hendrerit uspendisse
                   dapibus turpis in
                 </p>
@@ -158,7 +90,7 @@
           </section>
 
           <ul class="copyright">
-            <li>Copyright © 2020 Company Name</li>
+            <li>Copyright © 2022 Pham The Duong</li>
             <li>
               Template by:
               <a href="https://www.phpjabbers.com/">PHPJabbers.com</a>

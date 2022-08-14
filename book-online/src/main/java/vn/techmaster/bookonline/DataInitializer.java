@@ -1,19 +1,31 @@
 package vn.techmaster.bookonline;
 
+import com.github.javafaker.Faker;
 import org.springframework.beans.factory.annotation.Autowired;
 import vn.techmaster.bookonline.entitiy.*;
 import vn.techmaster.bookonline.repository.AuthorRepository;
+import vn.techmaster.bookonline.repository.BookRepository;
 import vn.techmaster.bookonline.repository.UserRepository;
 
 import javax.transaction.Transactional;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+import java.util.Set;
 
 public class DataInitializer {
     @Autowired
     private AuthorRepository authorRepository;
     @Autowired
+    private BookRepository bookRepository;
+    @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private Faker faker;
+
+    private final Random random = new Random();
 
     @Transactional
     public void initData() {
@@ -26,84 +38,72 @@ public class DataInitializer {
                 .fullName("Admin")
                 .gender(Gender.FEMALE)
                 .dob(LocalDate.now().minusYears(20))
-                .status(Status.NORMAL)
-                .roles(List.of("admin", "customer"))
+                .status(Status.ACTIVE)
+                .roles(List.of("admin", "user"))
                 .build();
         userRepository.save(admin);
 
-        User seller1 = User.builder()
-                .username("seller1")
-                .email("seller1@gmail.com")
+        User user1 = User.builder()
+                .username("user1")
+                .email("user1@gmail.com")
                 .mobile("123")
                 .hashedPassword("123")
-                .fullName("Seller 1")
-                .gender(Gender.MALE)
-                .dob(LocalDate.now().minusYears(21))
-                .status(Status.NORMAL)
-                .roles(List.of("seller", "customer"))
-                .build();
-        userRepository.save(seller1);
-
-        User seller2 = User.builder()
-                .username("seller2")
-                .email("seller2@gmail.com")
-                .mobile("123")
-                .hashedPassword("123")
-                .fullName("Seller 2")
-                .gender(Gender.FEMALE)
-                .dob(LocalDate.now().minusYears(22))
-                .status(Status.NORMAL)
-                .roles(List.of("seller", "customer"))
-                .build();
-        userRepository.save(seller2);
-
-        User customer1 = User.builder()
-                .username("customer1")
-                .email("customer1@gmail.com")
-                .mobile("123")
-                .hashedPassword("123")
-                .fullName("Customer 1")
+                .fullName("User 1")
                 .gender(Gender.FEMALE)
                 .dob(LocalDate.now().minusYears(23))
-                .status(Status.NORMAL)
-                .roles(List.of("customer"))
+                .status(Status.ACTIVE)
+                .roles(List.of("user"))
                 .build();
-        userRepository.save(customer1);
+        userRepository.save(user1);
 
-        User customer2 = User.builder()
-                .username("customer2")
-                .email("customer2@gmail.com")
+        User user2 = User.builder()
+                .username("user2")
+                .email("user2@gmail.com")
                 .mobile("123")
                 .hashedPassword("123")
-                .fullName("Customer 2")
+                .fullName("User 2")
                 .gender(Gender.MALE)
                 .dob(LocalDate.now().minusYears(24))
-                .status(Status.NORMAL)
-                .roles(List.of("customer"))
+                .status(Status.ACTIVE)
+                .roles(List.of("user"))
                 .build();
-        userRepository.save(customer2);
+        userRepository.save(user2);
         // End create users
 
         // Begin create authors
-        Author author1 = Author.builder()
-                .fullName("Author 1")
-                .gender(Gender.FEMALE)
-                .address("Address author 1")
-                .yearOfBirth(1980)
-                .yearOfDeath(null)
-                .books(null)
-                .build();
-        authorRepository.save(author1);
-
-        Author author2 = Author.builder()
-                .fullName("Author 2")
-                .gender(Gender.MALE)
-                .address("Address author 2")
-                .yearOfBirth(1771)
-                .yearOfDeath(1853)
-                .books(null)
-                .build();
-        authorRepository.save(author2);
+        List<Author> authors = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            Author author = Author.builder()
+                    .fullName("Author " + i)
+                    .gender(Gender.values()[random.nextInt(Gender.values().length)])
+                    .address("Address author " + i)
+                    .yearOfBirth(random.nextInt(2000 - 1700) + 1700)
+                    .books(null)
+                    .build();
+            if (author.getYearOfBirth() < 1950) {
+                author.setYearOfDeath(author.getYearOfBirth() + random.nextInt(100 - 20) + 20);
+            }
+            authors.add(author);
+        }
+        authorRepository.saveAll(authors);
         // End create authors
+
+        // Begin create books
+        List<Book> books = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            Book book = Book.builder()
+                    .name(faker.book().title())
+                    .publishedYear(random.nextInt(2000 - 1700) + 1700)
+                    .pages(random.nextInt(1000) + 50)
+                    .quantity(random.nextInt(1000))
+                    .thumbnail("upload/book-thumbnails/book" + i + ".webp")
+                    .description(faker.lorem().paragraph(10))
+                    .price((random.nextLong(500L - 10) + 10) * 1000)
+                    .authors(Set.of(authors.get(random.nextInt(authors.size()))))
+                    .build();
+            books.add(book);
+        }
+        bookRepository.saveAll(books);
+        // End create books
     }
 }

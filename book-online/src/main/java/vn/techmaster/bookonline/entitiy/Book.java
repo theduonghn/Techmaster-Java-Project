@@ -2,7 +2,9 @@ package vn.techmaster.bookonline.entitiy;
 
 import lombok.*;
 import org.hibernate.Hibernate;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -28,7 +30,7 @@ public class Book {
     private String name;
 
     @Column(name = "published_year")
-    private Integer year;
+    private Integer publishedYear;
 
     @Column(name = "pages")
     private Integer pages;
@@ -39,19 +41,24 @@ public class Book {
     @Column(name = "thumbnail")
     private String thumbnail;
 
+    @Lob
     @Column(name = "description")
     private String description;
 
     @Column(name = "price")
     private Long price;
 
+    @CreationTimestamp
     @Column(name = "created_at", columnDefinition = "TIMESTAMP")
     private LocalDateTime createdAt;
 
+    @UpdateTimestamp
     @Column(name = "updated_at", columnDefinition = "TIMESTAMP")
     private LocalDateTime updatedAt;
 
-    @ManyToMany(mappedBy = "books")
+    @ManyToMany
+    @JoinTable(name = "author_book", joinColumns = @JoinColumn(name = "book_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "author_id", referencedColumnName = "id"))
     private Set<Author> authors = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "book")
@@ -66,10 +73,6 @@ public class Book {
     @ManyToOne
     @JoinColumn(name = "publishing_company_id")
     private PublishingCompany publishingCompany;
-
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "shop_id", nullable = false)
-    private Shop shop;
 
     @ManyToMany(mappedBy = "books")
     private Set<Cart> carts = new LinkedHashSet<>();
