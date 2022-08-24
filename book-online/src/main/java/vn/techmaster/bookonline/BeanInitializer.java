@@ -8,8 +8,8 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class BeanInitializer {
     @Bean
-    public DataInitializer dataInitializer() {
-        return new DataInitializer();
+    public MockDataInitializer dataInitializer() {
+        return new MockDataInitializer();
     }
 
     @Bean

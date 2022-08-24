@@ -9,7 +9,7 @@ import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.util.*;
 
-public class DataInitializer {
+public class MockDataInitializer {
     @Autowired
     private AuthorRepository authorRepository;
     @Autowired
@@ -28,7 +28,7 @@ public class DataInitializer {
 
     @Transactional
     public void initData() {
-        // Begin create users
+        // Begin create admin
         User admin = User.builder()
                 .username("admin")
                 .email("admin@gmail.com")
@@ -41,33 +41,29 @@ public class DataInitializer {
                 .roles(List.of("admin", "user"))
                 .build();
         userRepository.save(admin);
+        // End create admin
 
-        User user1 = User.builder()
-                .username("user1")
-                .email("user1@gmail.com")
-                .mobile("123")
-                .hashedPassword("123")
-                .fullName("User 1")
-                .gender(Gender.FEMALE)
-                .dob(LocalDate.now().minusYears(23))
-                .status(Status.ACTIVE)
-                .roles(List.of("user"))
-                .build();
-        userRepository.save(user1);
-
-        User user2 = User.builder()
-                .username("user2")
-                .email("user2@gmail.com")
-                .mobile("123")
-                .hashedPassword("123")
-                .fullName("User 2")
-                .gender(Gender.MALE)
-                .dob(LocalDate.now().minusYears(24))
-                .status(Status.ACTIVE)
-                .roles(List.of("user"))
-                .build();
-        userRepository.save(user2);
-        // End create users
+        // Begin create active users
+        List<User> users = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            User user = User.builder()
+                    .username("user" + i)
+                    .email("user" + i + "@gmail.com")
+                    .mobile("123")
+                    .hashedPassword("123")
+                    .fullName(faker.name().fullName())
+                    .gender(Gender.values()[random.nextInt(Gender.values().length)])
+                    .dob(LocalDate.now().minusYears(random.nextInt(70 - 18) + 18)
+                            .minusDays(random.nextInt(365)))
+                    .homeAddress(random.nextInt(2) == 0 ? null : faker.address().fullAddress())
+                    .workAddress(random.nextInt(2) == 0 ? null : faker.address().fullAddress())
+                    .status(Status.ACTIVE)
+                    .roles(List.of("user"))
+                    .build();
+            users.add(user);
+        }
+        userRepository.saveAll(users);
+        // End create active users
 
         // Begin create authors
         List<Author> authors = new ArrayList<>();

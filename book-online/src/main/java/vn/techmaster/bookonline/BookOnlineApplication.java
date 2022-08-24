@@ -9,13 +9,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class BookOnlineApplication implements ApplicationRunner {
 	@Autowired
-	private DataInitializer dataInitializer;
+	private MockDataInitializer mockDataInitializer;
 
 	public static void main(String[] args) {
 		SpringApplication.run(BookOnlineApplication.class, args);
 	}
 
 	public void run(ApplicationArguments args) throws Exception {
-		dataInitializer.initData();
+		mockDataInitializer.initData();
 	}
 }
