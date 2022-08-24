@@ -14,7 +14,7 @@ import java.util.Set;
 @Setter
 @Entity
 @Table(name = "publishing_company")
-public class PublishingCompany {
+public class Publisher {
     @Id
     @Column(name = "id", nullable = false)
     @GeneratedValue(generator = "uuid")
@@ -24,6 +24,6 @@ public class PublishingCompany {
     @Column(name = "name", nullable = false, unique = true)
     private String name;
 
-    @OneToMany(mappedBy = "publishingCompany", orphanRemoval = true)
+    @OneToMany(mappedBy = "publisher", orphanRemoval = true)
     private Set<Book> books = new LinkedHashSet<>();
 }

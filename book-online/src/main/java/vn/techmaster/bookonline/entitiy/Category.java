@@ -24,8 +24,6 @@ public class Category {
     @Column(name = "name", nullable = false, unique = true)
     private String name;
 
-    @ManyToMany
-    @JoinTable(name = "category_book", joinColumns = @JoinColumn(name = "category_id"),
-            inverseJoinColumns = @JoinColumn(name = "book_id"))
+    @ManyToMany(mappedBy = "categories")
     private Set<Book> books = new LinkedHashSet<>();
 }

@@ -4,8 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import vn.techmaster.bookonline.entitiy.Book;
 import vn.techmaster.bookonline.service.BookService;
+import vn.techmaster.bookonline.util.Utils;
 
 @Controller
 @RequestMapping
@@ -24,8 +27,11 @@ public class WebController {
         return "books";
     }
 
-    @GetMapping("/book-details")
-    public String showBookDetailsPage() {
+    @GetMapping("/book-details/{id}")
+    public String showBookDetailsPage(Model model, @PathVariable("id") String id) {
+        Book book = bookService.findById(id);
+        model.addAttribute("book", book);
+        model.addAttribute("authors", Utils.showList(bookService.getAuthorsNames(book)));
         return "book-details";
     }
 

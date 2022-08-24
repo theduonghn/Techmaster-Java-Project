@@ -67,12 +67,14 @@ public class Book {
     @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Rating> ratings = new LinkedHashSet<>();
 
-    @ManyToMany(mappedBy = "books")
+    @ManyToMany
+    @JoinTable(name = "category_book", joinColumns = @JoinColumn(name = "book_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id", referencedColumnName = "id"))
     private Set<Category> categories = new LinkedHashSet<>();
 
     @ManyToOne
     @JoinColumn(name = "publishing_company_id")
-    private PublishingCompany publishingCompany;
+    private Publisher publisher;
 
     @ManyToMany(mappedBy = "books")
     private Set<Cart> carts = new LinkedHashSet<>();

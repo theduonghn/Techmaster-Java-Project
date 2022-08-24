@@ -35,7 +35,6 @@ class UserRepositoryTest {
                 .roles(List.of("customer"))
                 .build();
         userRepository.save(testUser);
-        userRepository.save(testUser);
         String id = testUser.getId();
         User foundedUser = userRepository.findById(id).orElseThrow(() -> new NotFoundException("Test failed"));
         assertThat(foundedUser.getId()).isEqualTo(id);
@@ -44,6 +43,6 @@ class UserRepositoryTest {
     // Find all
     @Test
     void findAll() {
-        assertThat(userRepository.findAll()).size().isEqualTo(5);
+        assertThat(userRepository.findAll()).size().isEqualTo(3);
     }
 }

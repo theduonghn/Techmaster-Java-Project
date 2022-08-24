@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -24,10 +24,10 @@
         referrerpolicy="no-referrer"
       />
 
-      <link rel="stylesheet" href="assets/css/main.css" />
+      <link rel="stylesheet" th:href="@{/assets/css/main.css}" />
 
       <noscript
-        ><link rel="stylesheet" href="assets/css/noscript.css"
+        ><link rel="stylesheet" th:href="@{/assets/css/noscript.css}"
       /></noscript>
     </th:block>
   </head>

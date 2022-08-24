@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
   <head>
     <title>Book Online</title>
     <meta charset="utf-8" />
@@ -94,7 +94,7 @@
               <span class="image">
                 <img th:src="|/${book.thumbnail}|" alt="" />
               </span>
-              <a th:href="book-details">
+              <a th:href="|book-details/${book.id}|">
                 <h2 th:text="${book.name}">
                   Lorem ipsum dolor sit amet, consectetur
                 </h2>

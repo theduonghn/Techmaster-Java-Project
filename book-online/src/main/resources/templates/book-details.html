@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
   <head>
     <title>Book Online</title>
     <meta charset="utf-8" />
@@ -19,42 +19,54 @@
       <div id="main">
         <div class="inner">
           <h1>
+            <span th:text="${book.name}">
             Lorem ipsum dolor sit amet
-            <span class="pull-right"><del>$99.00</del> $79.00</span>
+            </span>
+            <span th:text="|${#numbers.formatInteger(book.price, 3, 'COMMA')} đ|" class="pull-right">$79.00</span>
           </h1>
 
           <div class="container-fluid">
             <div class="row">
-              <div class="col-md-5">
+              <div class="col-md-4">
                 <img
-                  src="images/product-1-720x480.jpg"
-                  class="img-fluid"
+                  th:src="|/${book.thumbnail}|"
+                  width="100%"
                   alt=""
                 />
               </div>
 
-              <div class="col-md-7">
-                <p>Quas qui, repellendus ullam, quam possimus ducimus earum!</p>
+              <div class="col-md-8">
+                <p>Author(s): <span th:text="${authors}">
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                  Rerum, iste neque, ut recusandae quibusdam perferendis qui
+                  modi aliquam quaerat molestiae.
+                </span></p>
 
-                <p>
+                <p>Publisher: <span th:text="${book.publisher.name}">
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                  Rerum, iste neque, ut recusandae quibusdam perferendis qui
+                  modi aliquam quaerat molestiae.
+                </span></p>
+
+                <p>Published year: <span th:text="${book.publishedYear}">
+                  2000
+                </span></p>
+
+                <p>Pages: <span th:text="${book.pages}">
+                  2000
+                </span></p>
+
+                <p th:text="${book.description}">
                   Lorem ipsum dolor sit amet, consectetur adipisicing elit.
                   Rerum, iste neque, ut recusandae quibusdam perferendis qui
                   modi aliquam quaerat molestiae.
                 </p>
 
+                <p>Stock: <span th:text="${book.quantity}">
+                  2000
+                </span></p>
+
                 <div class="row">
-                  <div class="col-sm-4">
-                    <label class="control-label">Extra 1</label>
-
-                    <div class="form-group">
-                      <select>
-                        <option value="0">Extra 1</option>
-                        <option value="1">Extra 2</option>
-                        <option value="2">Extra 3</option>
-                      </select>
-                    </div>
-                  </div>
-
                   <div class="col-sm-8">
                     <label class="control-label">Quantity</label>
 
@@ -89,9 +101,9 @@
             <section class="tiles">
               <article class="style1">
                 <span class="image">
-                  <img src="images/product-1-720x480.jpg" alt="" />
+                  <img th:src="@{/images/product-1-720x480.jpg}" alt="" />
                 </span>
-                <a href="product-details.html">
+                <a th:href="book-details">
                   <h2>Lorem ipsum dolor sit amet, consectetur</h2>
 
                   <p><del>$19.00</del> <strong>$19.00</strong></p>
@@ -105,7 +117,7 @@
 
               <article class="style2">
                 <span class="image">
-                  <img src="images/product-2-720x480.jpg" alt="" />
+                  <img th:src="@{/images/product-2-720x480.jpg}" alt="" />
                 </span>
                 <a href="product-details.html">
                   <h2>Lorem ipsum dolor sit amet, consectetur</h2>
@@ -121,7 +133,7 @@
 
               <article class="style3">
                 <span class="image">
-                  <img src="images/product-6-720x480.jpg" alt="" />
+                  <img th:src="@{/images/product-6-720x480.jpg}" alt="" />
                 </span>
                 <a href="product-details.html">
                   <h2>Lorem ipsum dolor sit amet, consectetur</h2>

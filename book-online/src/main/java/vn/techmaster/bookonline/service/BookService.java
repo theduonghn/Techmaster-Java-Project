@@ -2,6 +2,7 @@ package vn.techmaster.bookonline.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import vn.techmaster.bookonline.entitiy.Author;
 import vn.techmaster.bookonline.entitiy.Book;
 import vn.techmaster.bookonline.exception.NotFoundException;
 import vn.techmaster.bookonline.repository.BookRepository;
@@ -41,5 +42,10 @@ public class BookService {
     // Delete by id
     public void deleteById(String id) {
         bookRepository.deleteById(id);
+    }
+
+    // Get authors names
+    public List<String> getAuthorsNames(Book book) {
+        return book.getAuthors().stream().map(Author::getFullName).toList();
     }
 }
