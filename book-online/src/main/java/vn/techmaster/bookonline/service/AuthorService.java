@@ -23,17 +23,12 @@ public class AuthorService {
         return authorRepository.findAll();
     }
 
-    // Add entity
-    public Author add(Author author) {
+    // Save entity
+    public Author save(Author author) {
         return authorRepository.save(author);
     }
 
     // Add instance by request
-
-    // Update instance
-    public Author update(Author author) {
-        return authorRepository.save(author);
-    }
 
     // Update instance by request
 

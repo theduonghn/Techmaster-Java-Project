@@ -23,17 +23,12 @@ public class PublisherService {
         return publisherRepository.findAll();
     }
 
-    // Add entity
-    public Publisher add(Publisher publisher) {
+    // Save entity
+    public Publisher save(Publisher publisher) {
         return publisherRepository.save(publisher);
     }
 
     // Add instance by request
-
-    // Update instance
-    public Publisher update(Publisher publisher) {
-        return publisherRepository.save(publisher);
-    }
 
     // Update instance by request
 

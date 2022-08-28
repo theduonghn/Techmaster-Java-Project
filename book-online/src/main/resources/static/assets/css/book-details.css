@@ -26,6 +26,10 @@ body {
 
 .user-img {
   margin-top: 4px;
+  border: 1px solid;
+  border-radius: 50%;
+  width: 75px;
+  height: 75px;
 }
 
 .check-icon {
@@ -64,10 +68,5 @@ body {
 
 textarea {
   width: 100%;
-  box-sizing: border-box;
-}
-
-.btn.primary.float-right {
-  height: 85px;
   box-sizing: border-box;
 }

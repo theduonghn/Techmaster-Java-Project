@@ -24,16 +24,11 @@ public class CategoryService {
     }
 
     // Add entity
-    public Category add(Category category) {
+    public Category save(Category category) {
         return categoryRepository.save(category);
     }
 
     // Add instance by request
-
-    // Update instance
-    public Category update(Category category) {
-        return categoryRepository.save(category);
-    }
 
     // Update instance by request
 

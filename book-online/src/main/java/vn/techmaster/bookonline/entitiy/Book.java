@@ -2,15 +2,14 @@ package vn.techmaster.bookonline.entitiy;
 
 import lombok.*;
 import org.hibernate.Hibernate;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.annotations.*;
 
 import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.time.LocalDateTime;
-import java.util.LinkedHashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @Builder
 @AllArgsConstructor
@@ -61,8 +60,18 @@ public class Book {
             inverseJoinColumns = @JoinColumn(name = "author_id", referencedColumnName = "id"))
     private Set<Author> authors = new LinkedHashSet<>();
 
-    @OneToMany(mappedBy = "book")
+    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Comment> comments = new LinkedHashSet<>();
+
+    public void addComment(Comment comment) {
+        this.comments.add(comment);
+        comment.setBook(this);
+    }
+
+    public void removeComment(Comment comment) {
+        this.comments.remove(comment);
+        comment.setBook(null);
+    }
 
     @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Rating> ratings = new LinkedHashSet<>();
@@ -78,9 +87,6 @@ public class Book {
 
     @ManyToMany(mappedBy = "books")
     private Set<Cart> carts = new LinkedHashSet<>();
-
-    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Image> images = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "book")
     private Set<OrderBook> orderBooks = new LinkedHashSet<>();

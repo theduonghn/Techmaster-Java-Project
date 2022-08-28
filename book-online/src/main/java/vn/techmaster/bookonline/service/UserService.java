@@ -2,8 +2,9 @@ package vn.techmaster.bookonline.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import vn.techmaster.bookonline.exception.NotFoundException;
+import vn.techmaster.bookonline.entitiy.Comment;
 import vn.techmaster.bookonline.entitiy.User;
+import vn.techmaster.bookonline.exception.NotFoundException;
 import vn.techmaster.bookonline.repository.UserRepository;
 
 import java.util.List;
@@ -23,18 +24,30 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    // Add instance
-    public User add(User user) {
-        return userRepository.save(user);
-    }
-
-    // Update instance
-    public User update(User user) {
+    // Save instance
+    public User save(User user) {
         return userRepository.save(user);
     }
 
     // Delete by id
     public void delete(String id) {
         userRepository.deleteById(id);
+    }
+
+    // Add comment
+    public void addComment(User user, Comment comment) {
+        user.addComment(comment);
+        userRepository.save(user);
+    }
+
+    // Remove comment
+    public void removeComment(User user, Comment comment) {
+        user.removeComment(comment);
+        userRepository.save(user);
+    }
+
+    // Find by comment
+    public User findByComments(Comment comment) {
+        return userRepository.findByComments(comment);
     }
 }

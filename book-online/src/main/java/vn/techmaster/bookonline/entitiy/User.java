@@ -11,10 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @Builder
 @AllArgsConstructor
@@ -59,6 +56,9 @@ public class User {
     @Column(name = "work_address")
     private String workAddress;
 
+    @Column(name = "avatar")
+    private String avatar;
+
     @Type(type = "json")
     @Column(name = "roles", columnDefinition = "json")
     private List<String> roles;
@@ -75,8 +75,18 @@ public class User {
     @Column(name = "updated_at", columnDefinition = "TIMESTAMP")
     private LocalDateTime updatedAt;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Comment> comments = new LinkedHashSet<>();
+
+    public void addComment(Comment comment) {
+        this.comments.add(comment);
+        comment.setUser(this);
+    }
+
+    public void removeComment(Comment comment) {
+        this.comments.remove(comment);
+        comment.setUser(null);
+    }
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Rating> ratings = new LinkedHashSet<>();
@@ -86,9 +96,6 @@ public class User {
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, optional = false, orphanRemoval = true)
     private Cart cart;
-
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, optional = false, orphanRemoval = true)
-    private Wishlist wishlist;
 
     @Override
     public boolean equals(Object o) {

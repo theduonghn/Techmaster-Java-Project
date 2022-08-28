@@ -38,13 +38,13 @@ public class AuthorRestController {
     // Add instance
     @PostMapping
     public Author add(@RequestBody Author author) {
-        return authorService.add(author);
+        return authorService.save(author);
     }
 
     // Update instance
     @PutMapping("/{id}")
     public Author update(@RequestBody Author author, @PathVariable("id") String id) {
-        return authorService.update(author);
+        return authorService.save(author);
     }
 
     // Delete by id

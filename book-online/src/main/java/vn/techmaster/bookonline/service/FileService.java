@@ -77,14 +77,11 @@ public class FileService {
         }
     }
 
-    // Read logo
-    public byte[] readImage(String imageName) {
-        // Get file path
-        Path path = bookThumbnailsPath.resolve(imageName);
-
+    // Read image
+    public byte[] readImage(Path path) {
         // Check if file path exists
         if (!Files.exists(path)) {
-            throw new StorageException("Errors occur while reading file " + imageName);
+            throw new StorageException("Errors occur while reading file " + path.toString());
         }
 
         try {
@@ -96,10 +93,10 @@ public class FileService {
                 inputStream.close(); // Remember to close InputStream
                 return byteArray;
             } else {
-                throw new StorageException("Errors occur while reading file " + imageName);
+                throw new StorageException("Errors occur while reading file " + path.toString());
             }
         } catch (Exception e) {
-            throw new StorageException("Errors occur while reading file " + imageName);
+            throw new StorageException("Errors occur while reading file " + path.toString());
         }
     }
 
