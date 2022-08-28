@@ -50,11 +50,6 @@ public class Order {
     @Column(name = "updated_at", columnDefinition = "TIMESTAMP")
     private LocalDateTime updatedAt;
 
-    @ManyToMany
-    @JoinTable(name = "order_shipper", joinColumns = @JoinColumn(name = "order_id"),
-            inverseJoinColumns = @JoinColumn(name = "shipper_id"))
-    private Set<Shipper> shippers = new LinkedHashSet<>();
-
     @OneToMany(mappedBy = "order")
     private Set<OrderBook> orderBooks = new LinkedHashSet<>();
 
