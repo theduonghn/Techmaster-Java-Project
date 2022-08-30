@@ -89,7 +89,6 @@
           <section class="tiles">
             <article
               th:each="book : ${books}"
-              th:class="|style${#numbers.formatDecimal(T(java.lang.Math).floor(T(java.lang.Math).random()*6) + 1,1,0)}|"
             >
               <span class="image">
                 <img th:src="|/${book.thumbnail}|" alt="" />

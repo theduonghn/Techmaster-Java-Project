@@ -24,6 +24,7 @@ public class Category {
     @Column(name = "name", nullable = false, unique = true)
     private String name;
 
+    @Builder.Default
     @ManyToMany(mappedBy = "categories")
     private Set<Book> books = new LinkedHashSet<>();
 }

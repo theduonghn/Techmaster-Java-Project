@@ -36,6 +36,15 @@
 
               <div class="col-md-8">
                 <p>
+                  Categories:
+                  <span th:text="${categories}">
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Rerum, iste neque, ut recusandae quibusdam perferendis qui
+                    modi aliquam quaerat molestiae.
+                  </span>
+                </p>
+
+                <p>
                   Author(s):
                   <span th:text="${authors}">
                     Lorem ipsum dolor sit amet, consectetur adipisicing elit.
@@ -98,50 +107,55 @@
 
           <!-- Similar Products -->
           <div class="container-fluid">
-            <h2 class="h2">Similar Products</h2>
+            <h2 class="h2">Books with the same categories</h2>
             <section class="tiles">
-              <article class="style1">
-                <span class="image">
-                  <img th:src="@{/images/product-1-720x480.jpg}" alt="" />
-                </span>
-                <a th:href="book-details">
-                  <h2>Lorem ipsum dolor sit amet, consectetur</h2>
-
-                  <p><del>$19.00</del> <strong>$19.00</strong></p>
+              <article
+                  th:each="book : ${booksSameCategories}"
+              >
+              <span class="image">
+                <img th:src="|/${book.thumbnail}|" alt="" />
+              </span>
+                <a th:href="@{|/books/${book.id}|}">
+                  <h2 th:text="${book.name}">
+                    Lorem ipsum dolor sit amet, consectetur
+                  </h2>
 
                   <p>
+                    <strong
+                        th:text="|${#numbers.formatInteger(book.price, 3, 'COMMA')} đ|"
+                    >$19.00</strong
+                    >
+                  </p>
+
+                  <p th:text="${#strings.abbreviate(book.description, 100)}">
                     Vestibulum id est eu felis vulputate hendrerit uspendisse
                     dapibus turpis in
                   </p>
                 </a>
               </article>
+            </section>
 
-              <article class="style2">
-                <span class="image">
-                  <img th:src="@{/images/product-2-720x480.jpg}" alt="" />
-                </span>
-                <a href="product-details.html">
-                  <h2>Lorem ipsum dolor sit amet, consectetur</h2>
-
-                  <p><del>$19.00</del> <strong>$19.00</strong></p>
+            <h2 class="h2">Books with the same authors</h2>
+            <section class="tiles">
+              <article
+                  th:each="book : ${booksSameAuthors}"
+              >
+              <span class="image">
+                <img th:src="|/${book.thumbnail}|" alt="" />
+              </span>
+                <a th:href="@{|/books/${book.id}|}">
+                  <h2 th:text="${book.name}">
+                    Lorem ipsum dolor sit amet, consectetur
+                  </h2>
 
                   <p>
-                    Vestibulum id est eu felis vulputate hendrerit uspendisse
-                    dapibus turpis in
+                    <strong
+                        th:text="|${#numbers.formatInteger(book.price, 3, 'COMMA')} đ|"
+                    >$19.00</strong
+                    >
                   </p>
-                </a>
-              </article>
 
-              <article class="style3">
-                <span class="image">
-                  <img th:src="@{/images/product-6-720x480.jpg}" alt="" />
-                </span>
-                <a href="product-details.html">
-                  <h2>Lorem ipsum dolor sit amet, consectetur</h2>
-
-                  <p><del>$19.00</del> <strong>$19.00</strong></p>
-
-                  <p>
+                  <p th:text="${#strings.abbreviate(book.description, 100)}">
                     Vestibulum id est eu felis vulputate hendrerit uspendisse
                     dapibus turpis in
                   </p>
@@ -163,9 +177,7 @@
             </div>
 
             <div class="d-flex justify-content-between align-items-center mb-3">
-              <button type="button" class="btn primary float-right">
-                Post
-              </button>
+              <button type="button" class="btn primary">Post</button>
             </div>
 
             <div th:each="comment : ${comments}" class="card p-3">

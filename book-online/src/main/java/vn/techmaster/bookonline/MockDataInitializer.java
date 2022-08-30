@@ -98,7 +98,7 @@ public class MockDataInitializer {
 
         // Begin create categories
         List<Category> categories = new ArrayList<>();
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 5; i++) {
             Category category = Category.builder()
                     .name(faker.book().genre() + " " + i) // Plus i to avoid duplication
                     .build();
@@ -121,11 +121,6 @@ public class MockDataInitializer {
         // Begin create books
         List<Book> books = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
-            Set<Category> randomCategories = new HashSet<>();
-            for (int j = 0; j < 3; j++) {
-                randomCategories.add(categories.get(random.nextInt(categories.size())));
-            }
-
             Book book = new Book();
             book.setName(faker.book().title());
             book.setPublisher(publishers.get(random.nextInt(publishers.size())));
@@ -139,6 +134,11 @@ public class MockDataInitializer {
             Set<Author> randomAuthors = new LinkedHashSet<>();
             randomAuthors.add(authors.get(random.nextInt(authors.size())));
             book.setAuthors(randomAuthors);
+
+            for (int j = 0; j < 3; j++) {
+                Category randomCategory = categories.get(random.nextInt(categories.size()));
+                bookService.addCategory(book, randomCategory);
+            }
 
             books.add(book);
         }

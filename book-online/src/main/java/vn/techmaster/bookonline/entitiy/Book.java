@@ -81,6 +81,16 @@ public class Book {
             inverseJoinColumns = @JoinColumn(name = "category_id", referencedColumnName = "id"))
     private Set<Category> categories = new LinkedHashSet<>();
 
+    public void addCategory(Category category) {
+        this.categories.add(category);
+        category.getBooks().add(this);
+    }
+
+    public void removeCategory(Category category) {
+        this.categories.remove(category);
+        category.getBooks().remove(this);
+    }
+
     @ManyToOne
     @JoinColumn(name = "publishing_company_id")
     private Publisher publisher;

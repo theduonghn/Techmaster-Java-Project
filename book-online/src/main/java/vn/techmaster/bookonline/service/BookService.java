@@ -4,11 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import vn.techmaster.bookonline.entitiy.Author;
 import vn.techmaster.bookonline.entitiy.Book;
+import vn.techmaster.bookonline.entitiy.Category;
 import vn.techmaster.bookonline.entitiy.Comment;
 import vn.techmaster.bookonline.exception.NotFoundException;
 import vn.techmaster.bookonline.repository.BookRepository;
 
-import java.util.List;
+import java.util.*;
 
 @Service
 public class BookService {
@@ -40,6 +41,11 @@ public class BookService {
         bookRepository.deleteById(id);
     }
 
+    // Get categories names
+    public List<String> getCategoriesNames(Book book) {
+        return book.getCategories().stream().map(Category::getName).toList();
+    }
+
     // Get authors names
     public List<String> getAuthorsNames(Book book) {
         return book.getAuthors().stream().map(Author::getFullName).toList();
@@ -55,5 +61,51 @@ public class BookService {
     public void removeComment(Book book, Comment comment) {
         book.removeComment(comment);
         bookRepository.save(book);
+    }
+
+    // Add category
+    public void addCategory(Book book, Category category) {
+        book.addCategory(category);
+        bookRepository.save(book);
+    }
+
+    // Remove category
+    public void removeCategory(Book book, Category category) {
+        book.removeCategory(category);
+        bookRepository.save(book);
+    }
+
+    // Filter books
+    public List<Book> filterBooks(Collection<Category> categories, Long priceStart, Long priceEnd, Integer pagesStart, Integer pagesEnd,
+                                  String name) {
+        return bookRepository.filterBooks(categories, priceStart, priceEnd, pagesStart, pagesEnd, name);
+    }
+
+    // Find by category
+    public List<Book> findByCategory(Category category) {
+        return bookRepository.findByCategories(category);
+    }
+
+    // Find similar by categories
+    public Set<Book> findSimilarByCategories(Book book) {
+        Set<Book> result = new LinkedHashSet<>();
+        for (Category category : book.getCategories()) {
+            result.addAll(findByCategory(category));
+        }
+        return result;
+    }
+
+    // Find by author
+    public List<Book> findByAuthor(Author author) {
+        return bookRepository.findByAuthors(author);
+    }
+
+    // Find similar by authors
+    public Set<Book> findSimilarByAuthors(Book book) {
+        Set<Book> result = new LinkedHashSet<>();
+        for (Author author : book.getAuthors()) {
+            result.addAll(findByAuthor(author));
+        }
+        return result;
     }
 }

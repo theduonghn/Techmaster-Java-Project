@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+  <head>
+    <title>Book Online</title>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, user-scalable=no"
+    />
+    <th:block th:replace="fragments :: admin-css"></th:block>
+  </head>
+  <body>
+  <!-- Header -->
+  <header th:replace="fragments :: header"></header>
+
+  <div class="container">
+    <h1>Books</h1>
+
+    <table class="table table-bordered">
+      <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col">Thumbnail</th>
+        <th scope="col">Categories</th>
+        <th scope="col">Authors</th>
+        <th scope="col">Options</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="book, iStat : ${books}">
+        <th scope="row" th:text="${iStat.index} + 1"></th>
+        <td>
+          <a
+              th:href="@{|admin/book/${book.id}|}"
+              th:text="${book.name}"
+          ></a>
+        </td>
+        <td>
+          <img
+              th:src="|/${book.thumbnail}|"
+              alt=""
+              class="logo-small"
+          />
+        </td>
+        <td th:text="${{bookService.getCategoriesNames(book)}}"></td>
+        <td th:text="${{bookService.getAuthorsNames(book)}}"></td>
+        <td>
+          <form th:action="@{${book.id + '/update'}}" method="GET">
+            <input
+                class="btn btn-sm btn-secondary"
+                type="submit"
+                value="Update"
+            />
+          </form>
+          <form th:action="@{${book.id + '/delete'}}" method="GET">
+            <input
+                class="btn btn-sm btn-danger mt-1"
+                type="submit"
+                value="Delete"
+            />
+          </form>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Scripts -->
+  <th:block th:replace="fragments :: admin-scripts"></th:block>
+  </body>
+</html>
