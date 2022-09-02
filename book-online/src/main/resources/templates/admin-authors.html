@@ -14,50 +14,51 @@
     <header th:replace="fragments :: header"></header>
 
     <div class="container">
-      <h1>Books</h1>
+      <h1>Authors</h1>
 
       <a
         type="button"
         class="btn btn-sm btn-primary mb-3"
-        th:href="@{/admin/books/add}"
-        >Add new book</a
+        th:href="@{/admin/authors/add}"
+        >Add new author</a
       >
 
       <table class="table table-bordered">
         <thead>
           <tr>
             <th scope="col">#</th>
-            <th scope="col">Name</th>
-            <th scope="col">Thumbnail</th>
-            <th scope="col">Categories</th>
-            <th scope="col">Authors</th>
+            <th scope="col">Full name</th>
+            <th scope="col">Gender</th>
+            <th scope="col">Address</th>
+            <th scope="col">Year of birth</th>
+            <th scope="col">Year of death</th>
             <th scope="col">Options</th>
           </tr>
         </thead>
         <tbody>
-          <tr th:each="book, iStat : ${books}">
+          <tr th:each="author, iStat : ${authors}">
             <!-- # -->
             <th scope="row" th:text="${iStat.index + 1}"></th>
-            <!-- Name -->
+            <!-- Full name -->
             <td>
               <a
-                th:href="@{|/admin/books/${book.id}|}"
-                th:text="${book.name}"
+                th:href="@{|/admin/authors/${author.id}|}"
+                th:text="${author.fullName}"
               ></a>
             </td>
-            <!-- Thumbnail -->
-            <td>
-              <img th:src="|/${book.thumbnail}|" alt="" class="logo-small" />
-            </td>
-            <!-- Categories -->
-            <td th:text="${{bookService.getCategoriesNames(book)}}"></td>
-            <!-- Authors -->
-            <td th:text="${{bookService.getAuthorsNames(book)}}"></td>
+            <!-- Gender -->
+            <td th:text="${author.gender}"></td>
+            <!-- Address -->
+            <td th:text="${author.address}"></td>
+            <!-- Year of birth -->
+            <td th:text="${author.yearOfBirth}"></td>
+            <!-- Year of death -->
+            <td th:text="${author.yearOfDeath}"></td>
             <!-- Options -->
             <td>
               <form
                 id="form-update"
-                th:action="@{|/admin/books/${book.id}/update|}"
+                th:action="@{|/admin/authors/${author.id}/update|}"
                 method="GET"
               >
                 <button
@@ -70,7 +71,7 @@
               </form>
               <form
                 id="form-delete"
-                th:action="@{|/admin/books/${book.id}/delete|}"
+                th:action="@{|/admin/authors/${author.id}/delete|}"
                 method="GET"
               >
                 <button
@@ -93,7 +94,7 @@
           <li th:unless="${page == 1}" class="page-item">
             <a
               class="page-link"
-              th:href="@{/admin/books (page=${page - 1})}"
+              th:href="@{/admin/authors (page=${page - 1})}"
               aria-label="Previous"
             >
               <span aria-hidden="true">&laquo;</span>
@@ -102,7 +103,10 @@
           </li>
           <!-- First page -->
           <li th:unless="${page <= 2}" class="page-item">
-            <a class="page-link" th:href="@{/admin/books (page=1)}" th:text="1"
+            <a
+              class="page-link"
+              th:href="@{/admin/authors (page=1)}"
+              th:text="1"
               >previous page</a
             >
           </li>
@@ -114,7 +118,7 @@
           <li th:unless="${page == 1}" class="page-item">
             <a
               class="page-link"
-              th:href="@{/admin/books (page=${page - 1})}"
+              th:href="@{/admin/authors (page=${page - 1})}"
               th:text="${page - 1}"
               >previous page</a
             >
@@ -123,7 +127,7 @@
           <li class="page-item active">
             <a
               class="page-link"
-              th:href="@{/admin/books (page=${page})}"
+              th:href="@{/admin/authors (page=${page})}"
               th:text="${page}"
               >current page</a
             >
@@ -132,7 +136,7 @@
           <li th:unless="${page == maxPage}" class="page-item">
             <a
               class="page-link"
-              th:href="@{/admin/books (page=${page + 1})}"
+              th:href="@{/admin/authors (page=${page + 1})}"
               th:text="${page + 1}"
               >next page</a
             >
@@ -145,7 +149,7 @@
           <li th:unless="${page + 1 >= maxPage}" class="page-item">
             <a
               class="page-link"
-              th:href="@{/admin/books (page=${maxPage})}"
+              th:href="@{/admin/authors (page=${maxPage})}"
               th:text="${maxPage}"
               >previous page</a
             >
@@ -154,7 +158,7 @@
           <li th:unless="${page == maxPage}" class="page-item">
             <a
               class="page-link"
-              th:href="@{/admin/books (page=${page + 1})}"
+              th:href="@{/admin/authors (page=${page + 1})}"
               aria-label="Next"
             >
               <span aria-hidden="true">&raquo;</span>

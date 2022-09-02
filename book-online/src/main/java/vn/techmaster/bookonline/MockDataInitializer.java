@@ -80,7 +80,7 @@ public class MockDataInitializer {
 
         // Begin create authors
         List<Author> authors = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 50; i++) {
             Author author = Author.builder()
                     .fullName(faker.name().fullName())
                     .gender(Gender.values()[random.nextInt(Gender.values().length)])
