@@ -1,10 +1,14 @@
 package vn.techmaster.bookonline.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import vn.techmaster.bookonline.entitiy.Book;
 import vn.techmaster.bookonline.service.BookService;
 
 @Controller
@@ -14,8 +18,16 @@ public class AdminController {
     private BookService bookService;
 
     @GetMapping("/books")
-    public String showBooks(Model model) {
-        model.addAttribute("books", bookService.findAll());
+    public String showBooks(Model model, @RequestParam(value = "page", defaultValue = "1") Integer page) {
+        if (page <= 0) {
+            return "redirect:/admin/books";
+        }
+        Page<Book> pageBook = bookService.findByOrderByNameAsc(PageRequest.of(page - 1, 5));
+        Integer maxPage = pageBook.getTotalPages();
+        model.addAttribute("page", page);
+        model.addAttribute("maxPage", maxPage);
+
+        model.addAttribute("books", pageBook.getContent());
         model.addAttribute("bookService", bookService);
         return "admin-books";
     }

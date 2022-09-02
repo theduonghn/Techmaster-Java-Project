@@ -120,7 +120,7 @@ public class MockDataInitializer {
 
         // Begin create books
         List<Book> books = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 15; i++) {
             Book book = new Book();
             book.setName(faker.book().title());
             book.setPublisher(publishers.get(random.nextInt(publishers.size())));

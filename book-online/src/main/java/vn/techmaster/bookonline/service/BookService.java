@@ -1,6 +1,8 @@
 package vn.techmaster.bookonline.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import vn.techmaster.bookonline.entitiy.Author;
 import vn.techmaster.bookonline.entitiy.Book;
@@ -107,5 +109,10 @@ public class BookService {
             result.addAll(findByAuthor(author));
         }
         return result;
+    }
+
+    // Find all, pageable order by name
+    public Page<Book> findByOrderByNameAsc(Pageable pageable) {
+        return bookRepository.findByOrderByNameAsc(pageable);
     }
 }

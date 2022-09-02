@@ -1,3 +1,8 @@
 .logo-small {
-  width: 100px;
+  width: 50px;
+}
+
+#form-update,
+#form-delete {
+  display: inline-block;
 }
