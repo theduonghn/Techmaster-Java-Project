@@ -1,6 +1,8 @@
 package vn.techmaster.bookonline.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import vn.techmaster.bookonline.entitiy.Category;
 import vn.techmaster.bookonline.exception.NotFoundException;
@@ -36,5 +38,10 @@ public class CategoryService {
     // Delete by id
     public void deleteById(String id) {
         categoryRepository.deleteById(id);
+    }
+
+    // Find all, pageable order by name
+    public Page<Category> findByOrderByNameAsc(Pageable pageable) {
+        return categoryRepository.findByOrderByNameAsc(pageable);
     }
 }

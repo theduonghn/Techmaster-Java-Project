@@ -1,6 +1,8 @@
 package vn.techmaster.bookonline.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import vn.techmaster.bookonline.entitiy.Comment;
 import vn.techmaster.bookonline.entitiy.User;
@@ -49,5 +51,10 @@ public class UserService {
     // Find by comment
     public User findByComments(Comment comment) {
         return userRepository.findByComments(comment);
+    }
+
+    // Find all, pageable order by username
+    public Page<User> findByOrderByUsernameAsc(Pageable pageable) {
+        return userRepository.findByOrderByUsernameAsc(pageable);
     }
 }

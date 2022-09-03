@@ -84,7 +84,7 @@ public class MockDataInitializer {
             Author author = Author.builder()
                     .fullName(faker.name().fullName())
                     .gender(Gender.values()[random.nextInt(Gender.values().length)])
-                    .address("Address author " + i)
+                    .address(faker.address().fullAddress())
                     .yearOfBirth(random.nextInt(2000 - 1700) + 1700)
                     .books(null)
                     .build();
@@ -98,7 +98,7 @@ public class MockDataInitializer {
 
         // Begin create categories
         List<Category> categories = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 10; i++) {
             Category category = Category.builder()
                     .name(faker.book().genre() + " " + i) // Plus i to avoid duplication
                     .build();

@@ -8,10 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import vn.techmaster.bookonline.entitiy.Author;
-import vn.techmaster.bookonline.entitiy.Book;
-import vn.techmaster.bookonline.service.AuthorService;
-import vn.techmaster.bookonline.service.BookService;
+import vn.techmaster.bookonline.entitiy.*;
+import vn.techmaster.bookonline.service.*;
 
 @Controller
 @RequestMapping("admin")
@@ -20,6 +18,27 @@ public class AdminController {
     private AuthorService authorService;
     @Autowired
     private BookService bookService;
+    @Autowired
+    private CategoryService categoryService;
+    @Autowired
+    private PublisherService publisherService;
+    @Autowired
+    private UserService userService;
+
+    // Show authors
+    @GetMapping("/authors")
+    public String showAuthors(Model model, @RequestParam(value = "page", defaultValue = "1") Integer page) {
+        if (page <= 0) {
+            return "redirect:/admin/authors";
+        }
+        Page<Author> pageAuthor = authorService.findByOrderByFullNameAsc(PageRequest.of(page - 1, 5));
+        Integer maxPage = pageAuthor.getTotalPages();
+        model.addAttribute("page", page);
+        model.addAttribute("maxPage", maxPage);
+
+        model.addAttribute("authors", pageAuthor.getContent());
+        return "admin-authors";
+    }
 
     // Show books
     @GetMapping("/books")
@@ -37,19 +56,48 @@ public class AdminController {
         return "admin-books";
     }
 
-    // Show authors
-    @GetMapping("/authors")
-    public String showAuthors(Model model, @RequestParam(value = "page", defaultValue = "1") Integer page) {
+    // Show categories
+    @GetMapping("/categories")
+    public String showCategories(Model model, @RequestParam(value = "page", defaultValue = "1") Integer page) {
         if (page <= 0) {
-            return "redirect:/admin/authors";
+            return "redirect:/admin/categories";
         }
-        Page<Author> pageAuthor = authorService.findByOrderByFullNameAsc(PageRequest.of(page - 1, 5));
-        Integer maxPage = pageAuthor.getTotalPages();
+        Page<Category> pageCategory = categoryService.findByOrderByNameAsc(PageRequest.of(page - 1, 5));
+        Integer maxPage = pageCategory.getTotalPages();
         model.addAttribute("page", page);
         model.addAttribute("maxPage", maxPage);
 
-        model.addAttribute("authors", pageAuthor.getContent());
-        model.addAttribute("authorService", authorService);
-        return "admin-authors";
+        model.addAttribute("categories", pageCategory.getContent());
+        return "admin-categories";
+    }
+
+    // Show publishers
+    @GetMapping("/publishers")
+    public String showPublishers(Model model, @RequestParam(value = "page", defaultValue = "1") Integer page) {
+        if (page <= 0) {
+            return "redirect:/admin/publishers";
+        }
+        Page<Publisher> pagePublisher = publisherService.findByOrderByNameAsc(PageRequest.of(page - 1, 5));
+        Integer maxPage = pagePublisher.getTotalPages();
+        model.addAttribute("page", page);
+        model.addAttribute("maxPage", maxPage);
+
+        model.addAttribute("publishers", pagePublisher.getContent());
+        return "admin-publishers";
+    }
+
+    // Show users
+    @GetMapping("/users")
+    public String showUsers(Model model, @RequestParam(value = "page", defaultValue = "1") Integer page) {
+        if (page <= 0) {
+            return "redirect:/admin/users";
+        }
+        Page<User> pageUser = userService.findByOrderByUsernameAsc(PageRequest.of(page - 1, 5));
+        Integer maxPage = pageUser.getTotalPages();
+        model.addAttribute("page", page);
+        model.addAttribute("maxPage", maxPage);
+
+        model.addAttribute("users", pageUser.getContent());
+        return "admin-users";
     }
 }

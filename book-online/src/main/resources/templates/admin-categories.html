@@ -14,54 +14,42 @@
     <header th:replace="fragments :: header"></header>
 
     <div class="container">
-      <h1>Authors</h1>
+      <h1>Categories</h1>
 
       <a
         type="button"
         class="btn btn-sm btn-primary mb-3"
-        th:href="@{/admin/authors/add}"
-        >Add new author</a
+        th:href="@{/admin/categories/add}"
+        >Add new category</a
       >
 
       <table class="table table-bordered">
         <thead>
           <tr>
             <th scope="col">#</th>
-            <th scope="col">Full name</th>
-            <th scope="col">Gender</th>
-            <th scope="col">Address</th>
-            <th scope="col">Year of birth</th>
-            <th scope="col">Year of death</th>
+            <th scope="col">Name</th>
             <th scope="col">Number of books</th>
             <th scope="col">Options</th>
           </tr>
         </thead>
         <tbody>
-          <tr th:each="author, iStat : ${authors}">
+          <tr th:each="category, iStat : ${categories}">
             <!-- # -->
             <th scope="row" th:text="${iStat.index + 1}"></th>
-            <!-- Full name -->
+            <!-- Name -->
             <td>
               <a
-                th:href="@{|/admin/authors/${author.id}|}"
-                th:text="${author.fullName}"
+                th:href="@{|/admin/categories/${category.id}|}"
+                th:text="${category.name}"
               ></a>
             </td>
-            <!-- Gender -->
-            <td th:text="${author.gender}"></td>
-            <!-- Address -->
-            <td th:text="${author.address}"></td>
-            <!-- Year of birth -->
-            <td th:text="${author.yearOfBirth}"></td>
-            <!-- Year of death -->
-            <td th:text="${author.yearOfDeath}"></td>
             <!-- Number of books -->
-            <td th:text="${author.books.size}"></td>
+            <td th:text="${category.books.size}"></td>
             <!-- Options -->
             <td>
               <form
                 id="form-update"
-                th:action="@{|/admin/authors/${author.id}/update|}"
+                th:action="@{|/admin/categories/${category.id}/update|}"
                 method="GET"
               >
                 <button
@@ -74,7 +62,7 @@
               </form>
               <form
                 id="form-delete"
-                th:action="@{|/admin/authors/${author.id}/delete|}"
+                th:action="@{|/admin/categories/${category.id}/delete|}"
                 method="GET"
               >
                 <button
@@ -92,7 +80,7 @@
 
       <!-- BEGIN Pagination  -->
       <nav
-        th:replace="fragments :: pagination('authors')"
+        th:replace="fragments :: pagination('categories')"
         aria-label="Page navigation"
       ></nav>
       <!-- END Pagination  -->
