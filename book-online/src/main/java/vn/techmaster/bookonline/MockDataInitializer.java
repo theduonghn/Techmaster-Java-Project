@@ -2,7 +2,7 @@ package vn.techmaster.bookonline;
 
 import com.github.javafaker.Faker;
 import org.springframework.beans.factory.annotation.Autowired;
-import vn.techmaster.bookonline.entitiy.*;
+import vn.techmaster.bookonline.entity.*;
 import vn.techmaster.bookonline.repository.*;
 import vn.techmaster.bookonline.service.BookService;
 import vn.techmaster.bookonline.service.CommentService;
@@ -80,7 +80,7 @@ public class MockDataInitializer {
 
         // Begin create authors
         List<Author> authors = new ArrayList<>();
-        for (int i = 0; i < 50; i++) {
+        for (int i = 0; i < 25; i++) {
             Author author = Author.builder()
                     .fullName(faker.name().fullName())
                     .gender(Gender.values()[random.nextInt(Gender.values().length)])

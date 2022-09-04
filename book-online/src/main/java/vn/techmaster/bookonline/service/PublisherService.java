@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import vn.techmaster.bookonline.entitiy.Publisher;
+import vn.techmaster.bookonline.entity.Publisher;
 import vn.techmaster.bookonline.exception.NotFoundException;
 import vn.techmaster.bookonline.repository.PublisherRepository;
 
@@ -30,10 +30,9 @@ public class PublisherService {
         return publisherRepository.save(publisher);
     }
 
-    // Add instance by request
+    // Add entity by request
 
-    // Update instance by request
-
+    // Update entity by request
 
     // Delete by id
     public void deleteById(String id) {

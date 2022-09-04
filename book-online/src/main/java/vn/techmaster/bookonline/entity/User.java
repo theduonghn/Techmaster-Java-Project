@@ -1,4 +1,4 @@
-package vn.techmaster.bookonline.entitiy;
+package vn.techmaster.bookonline.entity;
 
 import com.vladmihalcea.hibernate.type.json.JsonStringType;
 import lombok.*;

@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import vn.techmaster.bookonline.entitiy.Comment;
-import vn.techmaster.bookonline.entitiy.User;
+import vn.techmaster.bookonline.entity.Comment;
+import vn.techmaster.bookonline.entity.User;
 import vn.techmaster.bookonline.exception.NotFoundException;
 import vn.techmaster.bookonline.repository.UserRepository;
 
@@ -26,7 +26,7 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    // Save instance
+    // Save entity
     public User save(User user) {
         return userRepository.save(user);
     }

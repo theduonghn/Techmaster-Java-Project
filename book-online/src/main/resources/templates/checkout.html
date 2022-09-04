@@ -7,7 +7,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1, user-scalable=no"
     />
-   <th:block th:replace="fragments :: css"></th:block>
+    <th:block th:replace="fragments :: css"></th:block>
   </head>
   <body class="is-preload">
     <!-- Wrapper -->
@@ -147,7 +147,7 @@
 
                     <label for="checkbox-4">
                       I agree with the
-                      <a href="terms.html" target="_blank"
+                      <a th:href="@{/terms}" target="_blank"
                         >Terms &amp; Conditions</a
                       >
                     </label>
@@ -157,7 +157,11 @@
                 <div class="field half text-right">
                   <ul class="actions">
                     <li>
-                      <input type="submit" value="Finish" class="primary" />
+                      <input
+                        type="submit"
+                        class="btn btn-secondary"
+                        value="Finish"
+                      />
                     </li>
                   </ul>
                 </div>

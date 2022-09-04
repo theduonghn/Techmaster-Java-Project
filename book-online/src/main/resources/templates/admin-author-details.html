@@ -13,6 +13,22 @@
     <!-- Header -->
     <header th:replace="fragments :: header"></header>
 
+    <!-- BEGIN Add successfully alert -->
+    <div
+      th:if="${successAlert}"
+      class="alert alert-success alert-dismissible fade show"
+      role="alert"
+    >
+      <th:block th:text="${successAlert}"></th:block>
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="alert"
+        aria-label="Close"
+      ></button>
+    </div>
+    <!-- END Add successfully alert -->
+
     <!-- BEGIN container -->
     <div class="container">
       <h1>Author Details</h1>

@@ -186,7 +186,6 @@ body.is-preload *:after {
 /* Type */
 
 body,
-select,
 textarea {
   color: #585858;
   font-family: "Source Sans Pro", Helvetica, sans-serif;
@@ -197,7 +196,6 @@ textarea {
 
 @media screen and (max-width: 1680px) {
   body,
-  select,
   textarea {
     font-size: 14pt;
   }

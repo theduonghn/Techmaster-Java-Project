@@ -2,10 +2,9 @@ package vn.techmaster.bookonline.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import vn.techmaster.bookonline.entitiy.Book;
-import vn.techmaster.bookonline.entitiy.Category;
-import vn.techmaster.bookonline.entitiy.Comment;
-import vn.techmaster.bookonline.entitiy.User;
+import vn.techmaster.bookonline.entity.Book;
+import vn.techmaster.bookonline.entity.Comment;
+import vn.techmaster.bookonline.entity.User;
 import vn.techmaster.bookonline.exception.NotFoundException;
 import vn.techmaster.bookonline.repository.BookRepository;
 import vn.techmaster.bookonline.repository.CommentRepository;

@@ -4,9 +4,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import vn.techmaster.bookonline.exception.NotFoundException;
-import vn.techmaster.bookonline.entitiy.Gender;
-import vn.techmaster.bookonline.entitiy.Status;
-import vn.techmaster.bookonline.entitiy.User;
+import vn.techmaster.bookonline.entity.Gender;
+import vn.techmaster.bookonline.entity.Status;
+import vn.techmaster.bookonline.entity.User;
 
 import javax.transaction.Transactional;
 import java.time.LocalDate;

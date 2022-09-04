@@ -5,12 +5,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import vn.techmaster.bookonline.entitiy.*;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import vn.techmaster.bookonline.dto.AuthorRequest;
+import vn.techmaster.bookonline.entity.*;
 import vn.techmaster.bookonline.service.*;
+
+import javax.validation.Valid;
 
 @Controller
 @RequestMapping("admin")
@@ -46,6 +49,65 @@ public class AdminController {
     public String showAuthorDetails(Model model, @PathVariable("id") String id) {
         model.addAttribute("author", authorService.findById(id));
         return "admin-author-details";
+    }
+
+    // Show add author page
+    @GetMapping("/authors/add")
+    public String showAddAuthor(Model model) {
+        model.addAttribute("authorRequest", new AuthorRequest());
+        return "admin-author-add";
+    }
+
+    // Submit add author
+    @PostMapping("/authors/add")
+    public String submitAddAuthor(Model model,
+                                  @Valid @ModelAttribute AuthorRequest authorRequest,
+                                  BindingResult result,
+                                  RedirectAttributes redirectAttributes) {
+        if (authorRequest.getYearOfBirth() != null && authorRequest.getYearOfDeath() != null && authorRequest.getYearOfDeath() <=
+                authorRequest.getYearOfBirth()) {
+            result.addError(new FieldError("authorRequest", "yearOfDeath", "Year of death must be greater than year of birth"));
+        }
+
+        if (result.hasErrors()) {
+            model.addAttribute("authorRequest", authorRequest);
+            return "admin-author-add";
+        }
+
+        authorService.saveByRequest(authorRequest);
+
+        redirectAttributes.addFlashAttribute("successAlert", "Author added successfully!");
+        return "redirect:/admin/authors";
+    }
+
+    // Show update author page
+    @GetMapping("/authors/{id}/update")
+    public String showUpdateAuthor(Model model, @PathVariable String id) {
+        Author author = authorService.findById(id);
+        model.addAttribute("authorRequest", authorService.mapRequestEntity(author));
+        return "admin-author-update";
+    }
+
+    // Submit update author
+    @PostMapping("/authors/{id}/update")
+    public String submitUpdateAuthor(Model model, @PathVariable String id,
+                                  @Valid @ModelAttribute AuthorRequest authorRequest,
+                                  BindingResult result,
+                                  RedirectAttributes redirectAttributes) {
+        if (authorRequest.getYearOfBirth() != null && authorRequest.getYearOfDeath() != null && authorRequest.getYearOfDeath() <=
+                authorRequest.getYearOfBirth()) {
+            result.addError(new FieldError("authorRequest", "yearOfDeath", "Year of death must be greater than year of birth"));
+        }
+
+        if (result.hasErrors()) {
+            model.addAttribute("authorRequest", authorRequest);
+            return "admin-author-update";
+        }
+
+        authorService.saveByRequest(authorRequest);
+
+        redirectAttributes.addFlashAttribute("successAlert", "Author updated successfully!");
+        return "redirect:/admin/authors/" + id;
     }
 
     // Show books

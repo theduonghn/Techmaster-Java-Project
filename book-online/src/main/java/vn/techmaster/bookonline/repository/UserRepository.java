@@ -4,8 +4,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import vn.techmaster.bookonline.entitiy.Comment;
-import vn.techmaster.bookonline.entitiy.User;
+import vn.techmaster.bookonline.entity.Comment;
+import vn.techmaster.bookonline.entity.User;
 
 import java.util.Optional;
 

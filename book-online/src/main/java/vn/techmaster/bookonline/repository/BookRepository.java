@@ -4,9 +4,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import vn.techmaster.bookonline.entitiy.Author;
-import vn.techmaster.bookonline.entitiy.Book;
-import vn.techmaster.bookonline.entitiy.Category;
+import vn.techmaster.bookonline.entity.Author;
+import vn.techmaster.bookonline.entity.Book;
+import vn.techmaster.bookonline.entity.Category;
 
 import java.util.Collection;
 import java.util.List;

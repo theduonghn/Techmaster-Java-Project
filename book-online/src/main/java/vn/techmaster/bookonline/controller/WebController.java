@@ -5,9 +5,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import vn.techmaster.bookonline.entitiy.Book;
-import vn.techmaster.bookonline.entitiy.Category;
-import vn.techmaster.bookonline.entitiy.Comment;
+import vn.techmaster.bookonline.entity.Book;
+import vn.techmaster.bookonline.entity.Category;
+import vn.techmaster.bookonline.entity.Comment;
 import vn.techmaster.bookonline.service.BookService;
 import vn.techmaster.bookonline.service.CategoryService;
 import vn.techmaster.bookonline.service.CommentService;
@@ -45,12 +45,12 @@ public class WebController {
 
     @PostMapping("/books")
     public String submitFilterBooks(RedirectAttributes redirectAttributes,
-                                    @ModelAttribute List<Category> selectedCategories,
-                                    @ModelAttribute Long minPrice,
-                                    @ModelAttribute Long maxPrice,
-                                    @ModelAttribute Integer minPages,
-                                    @ModelAttribute Integer maxPages,
-                                    @ModelAttribute String keyword) {
+            @ModelAttribute List<Category> selectedCategories,
+            @ModelAttribute Long minPrice,
+            @ModelAttribute Long maxPrice,
+            @ModelAttribute Integer minPages,
+            @ModelAttribute Integer maxPages,
+            @ModelAttribute String keyword) {
         redirectAttributes.addAttribute("categories", selectedCategories);
         redirectAttributes.addAttribute("minPrice", minPrice);
         redirectAttributes.addAttribute("maxPrice", maxPrice);
@@ -100,5 +100,10 @@ public class WebController {
     @GetMapping("/checkout")
     public String showCheckoutPage() {
         return "checkout";
+    }
+
+    @GetMapping("/terms")
+    public String showTermsPage() {
+        return "terms";
     }
 }

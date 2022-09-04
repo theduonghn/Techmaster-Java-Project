@@ -1,4 +1,4 @@
-package vn.techmaster.bookonline.entitiy;
+package vn.techmaster.bookonline.entity;
 
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;

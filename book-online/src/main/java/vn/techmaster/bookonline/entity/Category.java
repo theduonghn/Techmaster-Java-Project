@@ -1,4 +1,4 @@
-package vn.techmaster.bookonline.entitiy;
+package vn.techmaster.bookonline.entity;
 
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
@@ -13,21 +13,18 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
-@Table(name = "cart")
-public class Cart {
+@Table(name = "category")
+public class Category {
     @Id
     @Column(name = "id", nullable = false)
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "org.hibernate.id.UUIDGenerator")
     private String id;
 
-    @OneToOne(optional = false)
-    @JoinColumn(name = "user_id", nullable = false, unique = true)
-    private User user;
+    @Column(name = "name", nullable = false, unique = true)
+    private String name;
 
-    @ManyToMany
-    @JoinTable(name = "cart_book", joinColumns = @JoinColumn(name = "cart_id"),
-            inverseJoinColumns = @JoinColumn(name = "book_id"))
+    @Builder.Default
+    @ManyToMany(mappedBy = "categories")
     private Set<Book> books = new LinkedHashSet<>();
-
 }

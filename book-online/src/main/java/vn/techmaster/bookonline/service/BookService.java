@@ -4,10 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import vn.techmaster.bookonline.entitiy.Author;
-import vn.techmaster.bookonline.entitiy.Book;
-import vn.techmaster.bookonline.entitiy.Category;
-import vn.techmaster.bookonline.entitiy.Comment;
+import vn.techmaster.bookonline.entity.Author;
+import vn.techmaster.bookonline.entity.Book;
+import vn.techmaster.bookonline.entity.Category;
+import vn.techmaster.bookonline.entity.Comment;
 import vn.techmaster.bookonline.exception.NotFoundException;
 import vn.techmaster.bookonline.repository.BookRepository;
 
@@ -33,10 +33,9 @@ public class BookService {
         return bookRepository.save(book);
     }
 
-    // Add instance by request
+    // Add entity by request
 
-    // Update instance by request
-
+    // Update entity by request
 
     // Delete by id
     public void deleteById(String id) {

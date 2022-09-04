@@ -1,9 +1,10 @@
-package vn.techmaster.bookonline.entitiy;
+package vn.techmaster.bookonline.entity;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 import org.hibernate.annotations.GenericGenerator;
 

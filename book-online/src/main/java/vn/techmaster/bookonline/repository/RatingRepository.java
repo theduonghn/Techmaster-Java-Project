@@ -1,7 +1,7 @@
 package vn.techmaster.bookonline.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import vn.techmaster.bookonline.entitiy.Rating;
+import vn.techmaster.bookonline.entity.Rating;
 
 public interface RatingRepository extends JpaRepository<Rating, String> {
 }

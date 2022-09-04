@@ -3,10 +3,10 @@ package vn.techmaster.bookonline.repository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import vn.techmaster.bookonline.entitiy.Author;
-import vn.techmaster.bookonline.entitiy.Book;
-import vn.techmaster.bookonline.entitiy.Category;
-import vn.techmaster.bookonline.entitiy.Gender;
+import vn.techmaster.bookonline.entity.Author;
+import vn.techmaster.bookonline.entity.Book;
+import vn.techmaster.bookonline.entity.Category;
+import vn.techmaster.bookonline.entity.Gender;
 
 import javax.transaction.Transactional;
 import java.util.Set;
