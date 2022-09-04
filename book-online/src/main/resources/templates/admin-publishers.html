@@ -13,6 +13,7 @@
     <!-- Header -->
     <header th:replace="fragments :: header"></header>
 
+    <!-- BEGIN container -->
     <div class="container">
       <h1>Publishers</h1>
 
@@ -66,8 +67,9 @@
                 method="GET"
               >
                 <button
-                  type="submit"
-                  form="form-delete"
+                  type="button"
+                  data-bs-toggle="modal"
+                  data-bs-target="#exampleModal"
                   class="btn btn-sm btn-danger"
                 >
                   <i class="fa-regular fa-trash-can"></i>
@@ -85,6 +87,10 @@
       ></nav>
       <!-- END Pagination  -->
     </div>
+    <!-- END container -->
+
+    <!-- Modal confirm delete -->
+    <div th:replace="fragments :: modalConfirmDelete"></div>
 
     <!-- Scripts -->
     <th:block th:replace="fragments :: admin-scripts"></th:block>
