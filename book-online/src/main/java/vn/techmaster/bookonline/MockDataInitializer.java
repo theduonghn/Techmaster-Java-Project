@@ -43,7 +43,7 @@ public class MockDataInitializer {
         User admin = new User();
         admin.setUsername("admin");
         admin.setEmail("admin@gmail.com");
-        admin.setMobile("123");
+        admin.setMobile(faker.phoneNumber().cellPhone());
         admin.setHashedPassword("123");
         admin.setFullName("Admin");
         admin.setGender(Gender.FEMALE);
@@ -61,7 +61,7 @@ public class MockDataInitializer {
             User user = new User();
             user.setUsername(faker.name().username() + i); // Plus i to avoid duplication
             user.setEmail("user" + i + "@gmail.com");
-            user.setMobile("123");
+            user.setMobile(faker.phoneNumber().cellPhone());
             user.setHashedPassword("123");
             user.setFullName(faker.name().fullName());
             user.setGender(Gender.values()[random.nextInt(Gender.values().length)]);

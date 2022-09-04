@@ -91,7 +91,7 @@
                       <div class="col-sm-6">
                         <input
                           type="submit"
-                          class="primary"
+                          class="btn btn-secondary"
                           value="Add to Cart"
                         />
                       </div>
@@ -109,12 +109,10 @@
           <div class="container-fluid">
             <h2 class="h2">Books with the same categories</h2>
             <section class="tiles">
-              <article
-                  th:each="book : ${booksSameCategories}"
-              >
-              <span class="image">
-                <img th:src="|/${book.thumbnail}|" alt="" />
-              </span>
+              <article th:each="book : ${booksSameCategories}">
+                <span class="image">
+                  <img th:src="|/${book.thumbnail}|" alt="" />
+                </span>
                 <a th:href="@{|/books/${book.id}|}">
                   <h2 th:text="${book.name}">
                     Lorem ipsum dolor sit amet, consectetur
@@ -122,8 +120,8 @@
 
                   <p>
                     <strong
-                        th:text="|${#numbers.formatInteger(book.price, 3, 'COMMA')} đ|"
-                    >$19.00</strong
+                      th:text="|${#numbers.formatInteger(book.price, 3, 'COMMA')} đ|"
+                      >$19.00</strong
                     >
                   </p>
 
@@ -137,12 +135,10 @@
 
             <h2 class="h2">Books with the same authors</h2>
             <section class="tiles">
-              <article
-                  th:each="book : ${booksSameAuthors}"
-              >
-              <span class="image">
-                <img th:src="|/${book.thumbnail}|" alt="" />
-              </span>
+              <article th:each="book : ${booksSameAuthors}">
+                <span class="image">
+                  <img th:src="|/${book.thumbnail}|" alt="" />
+                </span>
                 <a th:href="@{|/books/${book.id}|}">
                   <h2 th:text="${book.name}">
                     Lorem ipsum dolor sit amet, consectetur
@@ -150,8 +146,8 @@
 
                   <p>
                     <strong
-                        th:text="|${#numbers.formatInteger(book.price, 3, 'COMMA')} đ|"
-                    >$19.00</strong
+                      th:text="|${#numbers.formatInteger(book.price, 3, 'COMMA')} đ|"
+                      >$19.00</strong
                     >
                   </p>
 
@@ -177,7 +173,7 @@
             </div>
 
             <div class="d-flex justify-content-between align-items-center mb-3">
-              <button type="button" class="btn primary">Post</button>
+              <button type="button" class="btn btn-secondary">Post</button>
             </div>
 
             <div th:each="comment : ${comments}" class="card p-3">

@@ -27,7 +27,6 @@
             <th scope="col">Full name</th>
             <th scope="col">Roles</th>
             <th scope="col">Status</th>
-            <th scope="col">Options</th>
           </tr>
         </thead>
         <tbody>
@@ -53,36 +52,6 @@
             <td th:text="${user.roles}"></td>
             <!-- Status -->
             <td th:text="${user.status}"></td>
-            <!-- Options -->
-            <td>
-              <form
-                id="form-update"
-                th:action="@{|/admin/users/${user.id}/update|}"
-                method="GET"
-              >
-                <button
-                  type="submit"
-                  form="form-update"
-                  class="btn btn-sm btn-secondary"
-                >
-                  <i class="fa-regular fa-pen-to-square"></i>
-                </button>
-              </form>
-              <form
-                id="form-delete"
-                th:action="@{|/admin/users/${user.id}/delete|}"
-                method="GET"
-              >
-                <button
-                  type="button"
-                  data-bs-toggle="modal"
-                  data-bs-target="#exampleModal"
-                  class="btn btn-sm btn-danger"
-                >
-                  <i class="fa-regular fa-trash-can"></i>
-                </button>
-              </form>
-            </td>
           </tr>
         </tbody>
       </table>
@@ -95,9 +64,6 @@
       <!-- END Pagination  -->
     </div>
     <!-- END container -->
-
-    <!-- Modal confirm delete -->
-    <div th:replace="fragments :: modalConfirmDelete"></div>
 
     <!-- Scripts -->
     <th:block th:replace="fragments :: admin-scripts"></th:block>

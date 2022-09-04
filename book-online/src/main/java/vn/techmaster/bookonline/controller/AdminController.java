@@ -6,6 +6,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import vn.techmaster.bookonline.entitiy.*;
@@ -40,6 +41,13 @@ public class AdminController {
         return "admin-authors";
     }
 
+    // Show author details
+    @GetMapping("/authors/{id}")
+    public String showAuthorDetails(Model model, @PathVariable("id") String id) {
+        model.addAttribute("author", authorService.findById(id));
+        return "admin-author-details";
+    }
+
     // Show books
     @GetMapping("/books")
     public String showBooks(Model model, @RequestParam(value = "page", defaultValue = "1") Integer page) {
@@ -54,6 +62,14 @@ public class AdminController {
         model.addAttribute("books", pageBook.getContent());
         model.addAttribute("bookService", bookService);
         return "admin-books";
+    }
+
+    // Show book details
+    @GetMapping("/books/{id}")
+    public String showBookDetails(Model model, @PathVariable("id") String id) {
+        model.addAttribute("book", bookService.findById(id));
+        model.addAttribute("bookService", bookService);
+        return "admin-book-details";
     }
 
     // Show categories
@@ -71,6 +87,13 @@ public class AdminController {
         return "admin-categories";
     }
 
+    // Show category details
+    @GetMapping("/categories/{id}")
+    public String showCategoryDetails(Model model, @PathVariable("id") String id) {
+        model.addAttribute("category", categoryService.findById(id));
+        return "admin-category-details";
+    }
+
     // Show publishers
     @GetMapping("/publishers")
     public String showPublishers(Model model, @RequestParam(value = "page", defaultValue = "1") Integer page) {
@@ -86,6 +109,13 @@ public class AdminController {
         return "admin-publishers";
     }
 
+    // Show publisher details
+    @GetMapping("/publishers/{id}")
+    public String showPublisherDetails(Model model, @PathVariable("id") String id) {
+        model.addAttribute("publisher", publisherService.findById(id));
+        return "admin-publisher-details";
+    }
+
     // Show users
     @GetMapping("/users")
     public String showUsers(Model model, @RequestParam(value = "page", defaultValue = "1") Integer page) {
@@ -99,5 +129,12 @@ public class AdminController {
 
         model.addAttribute("users", pageUser.getContent());
         return "admin-users";
+    }
+
+    // Show user details
+    @GetMapping("/users/{id}")
+    public String showUserDetails(Model model, @PathVariable("id") String id) {
+        model.addAttribute("user", userService.findById(id));
+        return "admin-user-details";
     }
 }
