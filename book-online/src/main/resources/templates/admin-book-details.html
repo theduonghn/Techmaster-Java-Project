@@ -36,6 +36,11 @@
               <img th:src="|/${book.thumbnail}|" alt="" class="logo-medium" />
             </td>
           </tr>
+          <!-- Publisher -->
+          <tr>
+            <th>Publisher</th>
+            <td th:text="${book.publisher.name}"></td>
+          </tr>
           <!-- Published year -->
           <tr>
             <th>Published year</th>
@@ -88,6 +93,7 @@
       <!-- Buttons -->
       <form
         id="form-update"
+        class="mb-3"
         th:action="@{|/admin/books/${book.id}/update|}"
         method="GET"
       >
@@ -101,6 +107,7 @@
       </form>
       <form
         id="form-delete"
+        class="mb-3"
         th:action="@{|/admin/books/${book.id}/delete|}"
         method="GET"
       >

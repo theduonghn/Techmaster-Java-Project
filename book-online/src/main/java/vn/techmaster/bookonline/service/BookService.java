@@ -4,19 +4,31 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import vn.techmaster.bookonline.dto.BookRequest;
 import vn.techmaster.bookonline.entity.Author;
 import vn.techmaster.bookonline.entity.Book;
 import vn.techmaster.bookonline.entity.Category;
 import vn.techmaster.bookonline.entity.Comment;
 import vn.techmaster.bookonline.exception.NotFoundException;
+import vn.techmaster.bookonline.repository.AuthorRepository;
 import vn.techmaster.bookonline.repository.BookRepository;
+import vn.techmaster.bookonline.repository.CategoryRepository;
+import vn.techmaster.bookonline.repository.PublisherRepository;
 
 import java.util.*;
 
 @Service
 public class BookService {
     @Autowired
+    private AuthorRepository authorRepository;
+    @Autowired
     private BookRepository bookRepository;
+    @Autowired
+    private CategoryRepository categoryRepository;
+    @Autowired
+    private PublisherRepository publisherRepository;
+    @Autowired
+    private FileService fileService;
 
     // Find by id
     public Book findById(String id) {
@@ -33,9 +45,50 @@ public class BookService {
         return bookRepository.save(book);
     }
 
-    // Add entity by request
+    // Map request from entity
+    public BookRequest mapRequestEntity(Book book) {
+        BookRequest bookRequest = new BookRequest();
 
-    // Update entity by request
+        bookRequest.setId(book.getId());
+        bookRequest.setName(book.getName());
+        bookRequest.setPublishedYear(book.getPublishedYear());
+        bookRequest.setPages(book.getPages());
+        bookRequest.setQuantity(book.getQuantity());
+        bookRequest.setThumbnail(book.getThumbnail());
+        bookRequest.setDescription(book.getDescription());
+        bookRequest.setPrice(book.getPrice());
+        bookRequest.setCategories(book.getCategories());
+        bookRequest.setAuthors(book.getAuthors());
+        bookRequest.setPublisher(book.getPublisher());
+
+        return bookRequest;
+    }
+
+    // Save entity by request
+    public Book saveByRequest(BookRequest bookRequest) {
+        Book book;
+        if (bookRequest.getId() == null) {
+            book = new Book();
+        } else {
+            book = findById(bookRequest.getId());
+        }
+
+        book.setName(bookRequest.getName());
+        book.setPublishedYear(bookRequest.getPublishedYear());
+        book.setPages(bookRequest.getPages());
+        book.setQuantity(bookRequest.getQuantity());
+        if (!bookRequest.getMultipartFile().isEmpty()) {
+            book.setThumbnail(
+                    fileService.uploadBookThumbnail(book.getId(), bookRequest.getMultipartFile()));
+        }
+        book.setDescription(bookRequest.getDescription());
+        book.setPrice(bookRequest.getPrice());
+        book.setAuthors(bookRequest.getAuthors());
+        book.setCategories(bookRequest.getCategories());
+        book.setPublisher(bookRequest.getPublisher());
+
+        return bookRepository.save(book);
+    }
 
     // Delete by id
     public void deleteById(String id) {

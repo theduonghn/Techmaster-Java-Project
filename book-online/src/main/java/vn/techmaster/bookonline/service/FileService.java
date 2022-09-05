@@ -37,8 +37,8 @@ public class FileService {
     }
 
     // Upload file
-    public String uploadEmployerLogo(String id, MultipartFile file) {
-        // Create employer logo path if not exist
+    public String uploadBookThumbnail(String id, MultipartFile file) {
+        // Create book thumbnail path if not exist
         createFolder(bookThumbnailsPath.toString());
 
         // Validate file
@@ -52,7 +52,7 @@ public class FileService {
             stream.write(file.getBytes());
             stream.close();
 
-            return id;
+            return bookThumbnailsPath + "/" + id;
         } catch (Exception e) {
             throw new StorageException("Errors occur while uploading file");
         }

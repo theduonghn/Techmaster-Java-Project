@@ -10,6 +10,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import vn.techmaster.bookonline.dto.AuthorRequest;
+import vn.techmaster.bookonline.dto.BookRequest;
 import vn.techmaster.bookonline.dto.CategoryRequest;
 import vn.techmaster.bookonline.dto.PublisherRequest;
 import vn.techmaster.bookonline.entity.*;
@@ -134,6 +135,67 @@ public class AdminController {
         model.addAttribute("book", bookService.findById(id));
         model.addAttribute("bookService", bookService);
         return "admin-book-details";
+    }
+
+    // Show add book page
+    @GetMapping("/books/add")
+    public String showAddBooks(Model model) {
+        model.addAttribute("bookRequest", new BookRequest());
+        model.addAttribute("categories", categoryService.findAll());
+        model.addAttribute("authors", authorService.findAll());
+        model.addAttribute("publishers", publisherService.findAll());
+        return "admin-book-add";
+    }
+
+    // Submit add book
+    @PostMapping("/books/add")
+    public String submitAddPublisher(Model model,
+                                     @Valid @ModelAttribute BookRequest bookRequest,
+                                     BindingResult result,
+                                     RedirectAttributes redirectAttributes) {
+        if (result.hasErrors()) {
+            model.addAttribute("bookRequest", bookRequest);
+            model.addAttribute("categories", categoryService.findAll());
+            model.addAttribute("authors", authorService.findAll());
+            model.addAttribute("publishers", publisherService.findAll());
+            return "admin-book-add";
+        }
+
+        bookService.saveByRequest(bookRequest);
+
+        redirectAttributes.addFlashAttribute("successAlert", "Book added successfully!");
+        return "redirect:/admin/books";
+    }
+
+    // Show update book page
+    @GetMapping("/books/{id}/update")
+    public String showUpdateBook(Model model, @PathVariable String id) {
+        Book book = bookService.findById(id);
+        model.addAttribute("bookRequest", bookService.mapRequestEntity(book));
+        model.addAttribute("categories", categoryService.findAll());
+        model.addAttribute("authors", authorService.findAll());
+        model.addAttribute("publishers", publisherService.findAll());
+        return "admin-book-update";
+    }
+
+    // Submit update book
+    @PostMapping("/books/{id}/update")
+    public String submitUpdateBook(Model model, @PathVariable String id,
+                                        @Valid @ModelAttribute BookRequest bookRequest,
+                                        BindingResult result,
+                                        RedirectAttributes redirectAttributes) {
+        if (result.hasErrors()) {
+            model.addAttribute("bookRequest", bookRequest);
+            model.addAttribute("categories", categoryService.findAll());
+            model.addAttribute("authors", authorService.findAll());
+            model.addAttribute("publishers", publisherService.findAll());
+            return "admin-book-update";
+        }
+
+        bookService.saveByRequest(bookRequest);
+
+        redirectAttributes.addFlashAttribute("successAlert", "Book updated successfully!");
+        return "redirect:/admin/books/" + id;
     }
 
     // Show categories
