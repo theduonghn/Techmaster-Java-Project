@@ -9,4 +9,6 @@ public interface PublisherRepository extends JpaRepository<Publisher, String> {
     // Find all, pageable order by name
     Page<Publisher> findByOrderByNameAsc(Pageable pageable);
 
+    // Check exists by name
+    boolean existsByName(String name);
 }

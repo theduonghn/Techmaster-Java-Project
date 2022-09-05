@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import vn.techmaster.bookonline.dto.CategoryRequest;
 import vn.techmaster.bookonline.entity.Category;
 import vn.techmaster.bookonline.exception.NotFoundException;
 import vn.techmaster.bookonline.repository.CategoryRepository;
@@ -25,14 +26,34 @@ public class CategoryService {
         return categoryRepository.findAll();
     }
 
-    // Add entity
+    // Save entity
     public Category save(Category category) {
         return categoryRepository.save(category);
     }
 
-    // Add entity by request
+    // Map request from entity
+    public CategoryRequest mapRequestEntity(Category category) {
+        CategoryRequest categoryRequest = new CategoryRequest();
 
-    // Update entity by request
+        categoryRequest.setId(category.getId());
+        categoryRequest.setName(category.getName());
+
+        return categoryRequest;
+    }
+
+    // Save entity by request
+    public Category saveByRequest(CategoryRequest categoryRequest) {
+        Category category;
+        if (categoryRequest.getId() == null) {
+            category = new Category();
+        } else {
+            category = findById(categoryRequest.getId());
+        }
+
+        category.setName(categoryRequest.getName());
+
+        return categoryRepository.save(category);
+    }
 
     // Delete by id
     public void deleteById(String id) {
@@ -42,5 +63,10 @@ public class CategoryService {
     // Find all, pageable order by name
     public Page<Category> findByOrderByNameAsc(Pageable pageable) {
         return categoryRepository.findByOrderByNameAsc(pageable);
+    }
+
+    // Check exists by name
+    public boolean existsByName(String name) {
+        return categoryRepository.existsByName(name);
     }
 }

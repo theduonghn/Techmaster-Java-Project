@@ -133,6 +133,23 @@
     </header>
     <!-- END fragment header -->
 
+    <!-- BEGIN fragment success alert -->
+    <div
+      th:fragment="successAlert"
+      th:if="${successAlert}"
+      class="alert alert-success alert-dismissible fade show"
+      role="alert"
+    >
+      <th:block th:text="${successAlert}"></th:block>
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="alert"
+        aria-label="Close"
+      ></button>
+    </div>
+    <!-- BEGIN fragment success alert -->
+
     <!-- BEGIN fragment pagination  -->
       <nav th:fragment="pagination(list)" aria-label="Page navigation">
         <ul class="pagination justify-content-center">

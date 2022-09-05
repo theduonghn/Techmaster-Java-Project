@@ -87,9 +87,7 @@
 
           <!-- Products -->
           <section class="tiles">
-            <article
-              th:each="book : ${books}"
-            >
+            <article th:each="book : ${books}">
               <span class="image">
                 <img th:src="|/${book.thumbnail}|" alt="" />
               </span>
@@ -217,13 +215,20 @@
           <section>
             <h2>Contact Us</h2>
             <form method="post" action="#">
-              <div class="fields">
-                <div class="field half">
-                  <input type="text" name="name" id="name" placeholder="Name" />
+              <div>
+                <div>
+                  <input
+                    class="form-control mb-3"
+                    type="text"
+                    name="name"
+                    id="name"
+                    placeholder="Name"
+                  />
                 </div>
 
-                <div class="field half">
+                <div>
                   <input
+                    class="form-control mb-3"
                     type="text"
                     name="email"
                     id="email"
@@ -231,8 +236,9 @@
                   />
                 </div>
 
-                <div class="field">
+                <div>
                   <input
+                    class="form-control mb-3"
                     type="text"
                     name="subject"
                     id="subject"
@@ -240,8 +246,9 @@
                   />
                 </div>
 
-                <div class="field">
+                <div>
                   <textarea
+                    class="form-control mb-3"
                     name="message"
                     id="message"
                     rows="3"
@@ -249,7 +256,7 @@
                   ></textarea>
                 </div>
 
-                <div class="field text-right">
+                <div class="text-right">
                   <label>&nbsp;</label>
 
                   <ul class="actions">
@@ -257,7 +264,7 @@
                       <input
                         type="submit"
                         value="Send Message"
-                        class="primary"
+                        class="btn btn-secondary"
                       />
                     </li>
                   </ul>
@@ -305,14 +312,6 @@
               </li>
             </ul>
           </section>
-
-          <ul class="copyright">
-            <li>Copyright © 2022 Pham The Duong</li>
-            <li>
-              Template by:
-              <a href="https://www.phpjabbers.com/">PHPJabbers.com</a>
-            </li>
-          </ul>
         </div>
       </footer>
     </div>

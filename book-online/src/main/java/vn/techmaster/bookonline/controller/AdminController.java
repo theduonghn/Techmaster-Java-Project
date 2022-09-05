@@ -10,6 +10,8 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import vn.techmaster.bookonline.dto.AuthorRequest;
+import vn.techmaster.bookonline.dto.CategoryRequest;
+import vn.techmaster.bookonline.dto.PublisherRequest;
 import vn.techmaster.bookonline.entity.*;
 import vn.techmaster.bookonline.service.*;
 
@@ -156,6 +158,55 @@ public class AdminController {
         return "admin-category-details";
     }
 
+    // Show add category page
+    @GetMapping("/categories/add")
+    public String showAddCategory(Model model) {
+        model.addAttribute("categoryRequest", new CategoryRequest());
+        return "admin-category-add";
+    }
+
+    // Submit add category
+    @PostMapping("/categories/add")
+    public String submitAddCategory(Model model,
+                                  @Valid @ModelAttribute CategoryRequest categoryRequest,
+                                  BindingResult result,
+                                  RedirectAttributes redirectAttributes) {
+        if (result.hasErrors()) {
+            model.addAttribute("categoryRequest", categoryRequest);
+            return "admin-category-add";
+        }
+
+        categoryService.saveByRequest(categoryRequest);
+
+        redirectAttributes.addFlashAttribute("successAlert", "Category added successfully!");
+        return "redirect:/admin/categories";
+    }
+
+    // Show update category page
+    @GetMapping("/categories/{id}/update")
+    public String showUpdateCategory(Model model, @PathVariable String id) {
+        Category category = categoryService.findById(id);
+        model.addAttribute("categoryRequest", categoryService.mapRequestEntity(category));
+        return "admin-category-update";
+    }
+
+    // Submit update category
+    @PostMapping("/categories/{id}/update")
+    public String submitUpdateAuthor(Model model, @PathVariable String id,
+                                     @Valid @ModelAttribute CategoryRequest categoryRequest,
+                                     BindingResult result,
+                                     RedirectAttributes redirectAttributes) {
+        if (result.hasErrors()) {
+            model.addAttribute("categoryRequest", categoryRequest);
+            return "admin-category-update";
+        }
+
+        categoryService.saveByRequest(categoryRequest);
+
+        redirectAttributes.addFlashAttribute("successAlert", "Category updated successfully!");
+        return "redirect:/admin/categories/" + id;
+    }
+
     // Show publishers
     @GetMapping("/publishers")
     public String showPublishers(Model model, @RequestParam(value = "page", defaultValue = "1") Integer page) {
@@ -176,6 +227,55 @@ public class AdminController {
     public String showPublisherDetails(Model model, @PathVariable("id") String id) {
         model.addAttribute("publisher", publisherService.findById(id));
         return "admin-publisher-details";
+    }
+
+    // Show add publisher page
+    @GetMapping("/publishers/add")
+    public String showAddPublisher(Model model) {
+        model.addAttribute("publisherRequest", new PublisherRequest());
+        return "admin-publisher-add";
+    }
+
+    // Submit add publisher
+    @PostMapping("/publishers/add")
+    public String submitAddPublisher(Model model,
+                                    @Valid @ModelAttribute PublisherRequest publisherRequest,
+                                    BindingResult result,
+                                    RedirectAttributes redirectAttributes) {
+        if (result.hasErrors()) {
+            model.addAttribute("publisherRequest", publisherRequest);
+            return "admin-publisher-add";
+        }
+
+        publisherService.saveByRequest(publisherRequest);
+
+        redirectAttributes.addFlashAttribute("successAlert", "Publisher added successfully!");
+        return "redirect:/admin/publishers";
+    }
+
+    // Show update publisher page
+    @GetMapping("/publishers/{id}/update")
+    public String showUpdatePublisher(Model model, @PathVariable String id) {
+        Publisher publisher = publisherService.findById(id);
+        model.addAttribute("publisherRequest", publisherService.mapRequestEntity(publisher));
+        return "admin-publisher-update";
+    }
+
+    // Submit update publisher
+    @PostMapping("/publishers/{id}/update")
+    public String submitUpdatePublisher(Model model, @PathVariable String id,
+                                     @Valid @ModelAttribute PublisherRequest publisherRequest,
+                                     BindingResult result,
+                                     RedirectAttributes redirectAttributes) {
+        if (result.hasErrors()) {
+            model.addAttribute("publisherRequest", publisherRequest);
+            return "admin-publisher-update";
+        }
+
+        publisherService.saveByRequest(publisherRequest);
+
+        redirectAttributes.addFlashAttribute("successAlert", "Publisher updated successfully!");
+        return "redirect:/admin/publishers/" + id;
     }
 
     // Show users

@@ -10,7 +10,6 @@ import java.io.Serializable;
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 public class AuthorRequest implements Serializable {
     private String id;
 
@@ -24,4 +23,22 @@ public class AuthorRequest implements Serializable {
     private Integer yearOfBirth;
 
     private Integer yearOfDeath;
+
+    public AuthorRequest(String id, String fullName, Gender gender, String address, Integer yearOfBirth,
+                         Integer yearOfDeath) {
+        this.id = id;
+        this.fullName = fullName.strip();
+        this.gender = gender;
+        this.address = address.strip();
+        this.yearOfBirth = yearOfBirth;
+        this.yearOfDeath = yearOfDeath;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName.strip();
+    }
+
+    public void setAddress(String address) {
+        this.address = address.strip();
+    }
 }

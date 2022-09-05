@@ -8,4 +8,7 @@ import vn.techmaster.bookonline.entity.Category;
 public interface CategoryRepository extends JpaRepository<Category, String> {
     // Find all, pageable order by name
     Page<Category> findByOrderByNameAsc(Pageable pageable);
+
+    // Check exists by name
+    boolean existsByName(String name);
 }

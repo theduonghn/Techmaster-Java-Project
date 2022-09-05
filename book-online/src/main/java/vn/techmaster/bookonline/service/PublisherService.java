@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import vn.techmaster.bookonline.dto.PublisherRequest;
 import vn.techmaster.bookonline.entity.Publisher;
 import vn.techmaster.bookonline.exception.NotFoundException;
 import vn.techmaster.bookonline.repository.PublisherRepository;
@@ -30,9 +31,29 @@ public class PublisherService {
         return publisherRepository.save(publisher);
     }
 
-    // Add entity by request
+    // Map request from entity
+    public PublisherRequest mapRequestEntity(Publisher publisher) {
+        PublisherRequest publisherRequest = new PublisherRequest();
 
-    // Update entity by request
+        publisherRequest.setId(publisher.getId());
+        publisherRequest.setName(publisher.getName());
+
+        return publisherRequest;
+    }
+
+    // Save entity by request
+    public Publisher saveByRequest(PublisherRequest publisherRequest) {
+        Publisher publisher;
+        if (publisherRequest.getId() == null) {
+            publisher = new Publisher();
+        } else {
+            publisher = findById(publisherRequest.getId());
+        }
+
+        publisher.setName(publisherRequest.getName());
+
+        return publisherRepository.save(publisher);
+    }
 
     // Delete by id
     public void deleteById(String id) {
@@ -42,5 +63,10 @@ public class PublisherService {
     // Find all, pageable order by name
     public Page<Publisher> findByOrderByNameAsc(Pageable pageable) {
         return publisherRepository.findByOrderByNameAsc(pageable);
+    }
+
+    // Check exists by name
+    public boolean existsByName(String name) {
+        return publisherRepository.existsByName(name);
     }
 }
