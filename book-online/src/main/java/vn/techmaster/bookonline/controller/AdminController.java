@@ -119,7 +119,7 @@ public class AdminController {
         if (page <= 0) {
             return "redirect:/admin/books";
         }
-        Page<Book> pageBook = bookService.findByOrderByNameAsc(PageRequest.of(page - 1, 5));
+        Page<Book> pageBook = bookService.findAllPageable(PageRequest.of(page - 1, 5));
         Integer maxPage = pageBook.getTotalPages();
         model.addAttribute("page", page);
         model.addAttribute("maxPage", maxPage);

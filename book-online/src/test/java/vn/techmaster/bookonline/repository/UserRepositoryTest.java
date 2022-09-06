@@ -27,7 +27,7 @@ class UserRepositoryTest {
                 .username("test")
                 .email("test@gmail.com")
                 .mobile("123")
-                .hashedPassword("123")
+                .password("123")
                 .fullName("test")
                 .gender(Gender.FEMALE)
                 .dob(LocalDate.now().minusYears(20))

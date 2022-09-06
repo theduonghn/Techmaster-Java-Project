@@ -4,6 +4,7 @@ import com.github.javafaker.Faker;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Configuration
 public class BeanInitializer {
@@ -20,5 +21,10 @@ public class BeanInitializer {
     @Bean
     public Faker faker() {
         return new Faker();
+    }
+
+    @Bean
+    public BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 }

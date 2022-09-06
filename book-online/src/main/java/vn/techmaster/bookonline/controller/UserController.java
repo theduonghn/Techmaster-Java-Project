@@ -9,14 +9,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import vn.techmaster.bookonline.service.UserService;
 
 @Controller
-@RequestMapping("/users")
 public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/{id}")
+    @GetMapping("/users/{id}")
     public String showUserDetail(Model model, @PathVariable("id") String id) {
         model.addAttribute("user", userService.findById(id));
         return "user";
+    }
+
+    @GetMapping("/profile")
+    public String showProfilePage() {
+        return "profile";
     }
 }

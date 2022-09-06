@@ -9,6 +9,7 @@ import javax.persistence.*;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -21,7 +22,7 @@ import java.util.*;
 @Entity
 @Table(name = "user")
 @TypeDef(name = "json", typeClass = JsonStringType.class)
-public class User {
+public class User implements Serializable {
     @Id
     @Column(name = "id", nullable = false)
     @GeneratedValue(generator = "uuid")
@@ -37,8 +38,8 @@ public class User {
     @Column(name = "mobile")
     private String mobile;
 
-    @Column(name = "hashed_password")
-    private String hashedPassword;
+    @Column(name = "password")
+    private String password;
 
     @Column(name = "full_name", nullable = false)
     private String fullName;

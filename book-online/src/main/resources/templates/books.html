@@ -31,73 +31,17 @@
           </div>
 
           <!-- Search and filter -->
-          <div>
-            <form method="post" , action="">
-              <h3>Categories</h3>
-              <div
-                th:each="category : ${categories}"
-                class="form-check form-check-inline"
-              >
-                <input type="checkbox" th:id="${category.id}" name="category" />
-                <label
-                  th:text="${category.name}"
-                  th:for="${category.id}"
-                  class="ms-2 fs-5"
-                  >Category</label
-                >
-              </div>
-
-              <h3>Price</h3>
-              <div class="fields">
-                <div class="field half">
-                  <input
-                    type="text"
-                    class="form-control"
-                    placeholder="Min price"
-                  />
-                </div>
-                <div class="field half">
-                  <input
-                    type="text"
-                    class="form-control"
-                    placeholder="Max price"
-                  />
-                </div>
-              </div>
-
-              <h3>Pages</h3>
-              <div class="fields">
-                <div class="field half">
-                  <input
-                    type="text"
-                    class="form-control"
-                    placeholder="Min pages"
-                  />
-                </div>
-                <div class="field half">
-                  <input
-                    type="text"
-                    class="form-control"
-                    placeholder="Max pages"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <input
-                  type="search"
-                  class="form-control"
-                  placeholder="Keyword..."
-                  aria-label="Search"
-                />
-              </div>
-
-              <div
-                class="d-flex justify-content-between align-items-center mt-3"
-              >
-                <button type="submit" class="btn btn-secondary">Search</button>
-              </div>
-            </form>
+          <div class="mb-5">
+            <div>
+              <input
+                id="input-search"
+                type="search"
+                class="form-control"
+                placeholder="Keyword..."
+                aria-label="Search"
+                th:value="${name}"
+              />
+            </div>
           </div>
 
           <!-- Products -->
@@ -125,6 +69,13 @@
               </a>
             </article>
           </section>
+
+          <!-- BEGIN Pagination  -->
+          <nav
+            th:replace="fragments :: pagination('books')"
+            aria-label="Page navigation"
+          ></nav>
+          <!-- END Pagination  -->
         </div>
       </div>
 
@@ -154,22 +105,14 @@
                 >
               </li>
             </ul>
-
             &nbsp;
           </section>
-
-          <ul class="copyright">
-            <li>Copyright © 2022 Pham The Duong</li>
-            <li>
-              Template by:
-              <a href="https://www.phpjabbers.com/">PHPJabbers.com</a>
-            </li>
-          </ul>
-        </div>
       </footer>
     </div>
 
     <!-- Scripts -->
     <th:block th:replace="fragments :: scripts"></th:block>
+
+    <script th:src="@{/assets/js/books.js}"></script>
   </body>
 </html>

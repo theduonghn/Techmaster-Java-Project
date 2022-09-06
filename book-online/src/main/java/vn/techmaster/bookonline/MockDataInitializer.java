@@ -2,6 +2,7 @@ package vn.techmaster.bookonline;
 
 import com.github.javafaker.Faker;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import vn.techmaster.bookonline.entity.*;
 import vn.techmaster.bookonline.repository.*;
 import vn.techmaster.bookonline.service.BookService;
@@ -35,6 +36,9 @@ public class MockDataInitializer {
     @Autowired
     private Faker faker;
 
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
+
     private final Random random = new Random();
 
     @Transactional
@@ -44,13 +48,13 @@ public class MockDataInitializer {
         admin.setUsername("admin");
         admin.setEmail("admin@gmail.com");
         admin.setMobile(faker.phoneNumber().cellPhone());
-        admin.setHashedPassword("123");
+        admin.setPassword(passwordEncoder.encode("123"));
         admin.setFullName("Admin");
         admin.setGender(Gender.FEMALE);
         admin.setDob(LocalDate.now().minusYears(20));
         admin.setAvatar(null);
         admin.setStatus(Status.ACTIVE);
-        admin.setRoles(List.of("admin", "user"));
+        admin.setRoles(List.of("ADMIN", "USER"));
 
         userRepository.save(admin);
         // End create admin
@@ -62,7 +66,7 @@ public class MockDataInitializer {
             user.setUsername(faker.name().username() + i); // Plus i to avoid duplication
             user.setEmail("user" + i + "@gmail.com");
             user.setMobile(faker.phoneNumber().cellPhone());
-            user.setHashedPassword("123");
+            user.setPassword(passwordEncoder.encode("123"));
             user.setFullName(faker.name().fullName());
             user.setGender(Gender.values()[random.nextInt(Gender.values().length)]);
             user.setDob(LocalDate.now().minusYears(random.nextInt(70 - 18) + 18)
@@ -71,7 +75,7 @@ public class MockDataInitializer {
             user.setWorkAddress(random.nextInt(2) == 0 ? null : faker.address().fullAddress());
             user.setAvatar("upload/user-avatars/user" + i + ".jpg");
             user.setStatus(Status.ACTIVE);
-            user.setRoles(List.of("user"));
+            user.setRoles(List.of("USER"));
 
             users.add(user);
         }

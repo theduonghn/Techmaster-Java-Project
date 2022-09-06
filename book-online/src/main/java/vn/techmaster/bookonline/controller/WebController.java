@@ -1,6 +1,8 @@
 package vn.techmaster.bookonline.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -30,16 +32,28 @@ public class WebController {
 
     @GetMapping
     public String showHomePage(Model model) {
-        model.addAttribute("books", bookService.findAll());
+        model.addAttribute("books", bookService.findAll().subList(0, 4));
         return "index";
     }
 
     @GetMapping("/books")
-    public String showBooksPage(Model model) {
+    public String showBooksPage(Model model,
+                                @RequestParam(value = "name", defaultValue = "") String name,
+                                @RequestParam(value = "page", defaultValue = "1") Integer page) {
+        if (page <= 0) {
+            return "redirect:/books";
+        }
+        Page<Book> pageBook = bookService.findByNamePageable(name, PageRequest.of(page - 1, 8));
+        Integer maxPage = pageBook.getTotalPages();
+        model.addAttribute("page", page);
+        model.addAttribute("maxPage", maxPage);
+
+        model.addAttribute("name", name);
+
         List<Category> categories = categoryService.findAll();
         model.addAttribute("categories", categories);
 
-        model.addAttribute("books", bookService.findAll());
+        model.addAttribute("books", pageBook.getContent());
         return "books";
     }
 

@@ -164,7 +164,12 @@ public class BookService {
     }
 
     // Find all, pageable order by name
-    public Page<Book> findByOrderByNameAsc(Pageable pageable) {
+    public Page<Book> findAllPageable(Pageable pageable) {
         return bookRepository.findByOrderByNameAsc(pageable);
+    }
+
+    // Find by name, pageable order by name
+    public Page<Book> findByNamePageable(String name, Pageable pageable) {
+        return bookRepository.findByNameContainsIgnoreCaseOrderByNameAsc(name, pageable);
     }
 }

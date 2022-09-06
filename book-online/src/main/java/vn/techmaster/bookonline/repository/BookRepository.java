@@ -15,6 +15,11 @@ public interface BookRepository extends JpaRepository<Book, String> {
     // Find all, pageable order by name
     Page<Book> findByOrderByNameAsc(Pageable pageable);
 
+    // Find by name, pageable order by name
+    Page<Book> findByNameContainsIgnoreCaseOrderByNameAsc(String name, Pageable pageable);
+
+
+
     // Find by name
     @Query("select b from Book b where upper(b.name) like upper(concat('%', ?1, '%'))")
     List<Book> findByName(String name);
