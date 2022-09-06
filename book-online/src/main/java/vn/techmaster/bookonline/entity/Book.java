@@ -73,9 +73,6 @@ public class Book {
         comment.setBook(null);
     }
 
-    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Rating> ratings = new LinkedHashSet<>();
-
     @ManyToMany
     @JoinTable(name = "category_book", joinColumns = @JoinColumn(name = "book_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "category_id", referencedColumnName = "id"))

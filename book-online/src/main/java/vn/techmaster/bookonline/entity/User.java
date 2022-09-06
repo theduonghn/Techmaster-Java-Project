@@ -88,9 +88,6 @@ public class User {
         comment.setUser(null);
     }
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Rating> ratings = new LinkedHashSet<>();
-
     @OneToMany(mappedBy = "user")
     private Set<Order> orders = new LinkedHashSet<>();
 
