@@ -1,7 +1,10 @@
 package vn.techmaster.bookonline.service;
 
+import net.bytebuddy.TypeCache;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import vn.techmaster.bookonline.dto.CommentRequest;
 import vn.techmaster.bookonline.entity.Book;
 import vn.techmaster.bookonline.entity.Comment;
 import vn.techmaster.bookonline.entity.User;
@@ -40,7 +43,6 @@ public class CommentService {
 
     // Update instance by request
 
-
     // Delete by id
     public void deleteById(String id) {
         commentRepository.deleteById(id);
@@ -60,6 +62,13 @@ public class CommentService {
 
     // Find by book
     public List<Comment> findByBook(Book book) {
-        return commentRepository.findByBook(book);
+        return commentRepository.findByBook(book, Sort.by(Sort.Direction.DESC, "createdAt"));
+    }
+
+    // Save by request
+    public void saveByRequest(CommentRequest commentRequest, User user, Book book) {
+        Comment comment = new Comment();
+        comment.setContent(commentRequest.getContent());
+        addUserAndBook(comment, user, book);
     }
 }

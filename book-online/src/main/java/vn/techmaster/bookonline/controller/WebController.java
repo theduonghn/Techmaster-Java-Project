@@ -3,19 +3,24 @@ package vn.techmaster.bookonline.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import vn.techmaster.bookonline.entity.Book;
-import vn.techmaster.bookonline.entity.Category;
-import vn.techmaster.bookonline.entity.Comment;
+import vn.techmaster.bookonline.dto.AuthorRequest;
+import vn.techmaster.bookonline.dto.CommentRequest;
+import vn.techmaster.bookonline.entity.*;
+import vn.techmaster.bookonline.security.UserDetailsCustom;
 import vn.techmaster.bookonline.service.BookService;
 import vn.techmaster.bookonline.service.CategoryService;
 import vn.techmaster.bookonline.service.CommentService;
 import vn.techmaster.bookonline.service.UserService;
 import vn.techmaster.bookonline.util.Utils;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -88,7 +93,31 @@ public class WebController {
 
         model.addAttribute("booksSameCategories", bookService.findSimilarByCategories(book));
         model.addAttribute("booksSameAuthors", bookService.findSimilarByAuthors(book));
+
+        model.addAttribute("commentRequest", new CommentRequest());
         return "book-details";
+    }
+
+    // Submit add comment
+    @PostMapping("/books/{id}/comments/add")
+    public String submitAddComment(Model model,
+                                  @PathVariable String id,
+                                  @Valid @ModelAttribute CommentRequest commentRequest,
+                                  BindingResult result) {
+        if (result.hasErrors()) {
+            model.addAttribute("commentRequest", commentRequest);
+            return "redirect:/books/" + id;
+        }
+
+        UserDetailsCustom userDetailsCustom =
+                (UserDetailsCustom) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = userService.findById(userDetailsCustom.getUser().getId());
+
+        Book book = bookService.findById(id);
+
+        commentService.saveByRequest(commentRequest, user, book);
+
+        return "redirect:/books/" + id;
     }
 
     @GetMapping("/about")

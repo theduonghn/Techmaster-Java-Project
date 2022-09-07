@@ -50,7 +50,7 @@
               <span class="image">
                 <img th:src="|/${book.thumbnail}|" alt="" />
               </span>
-              <a th:href="|books/${book.id}|">
+              <a th:href="@{|/books/${book.id}|}">
                 <h2 th:text="${book.name}">
                   Lorem ipsum dolor sit amet, consectetur
                 </h2>
