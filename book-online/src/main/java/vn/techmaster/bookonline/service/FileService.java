@@ -23,6 +23,7 @@ public class FileService {
     // Folder path to upload file
     private final Path rootPath = Paths.get("upload");
     private final Path bookThumbnailsPath = rootPath.resolve("book-thumbnails");
+    private final Path userAvatarsPath = rootPath.resolve("user-avatars");
 
     public FileService() {
         createFolder(rootPath.toString());
@@ -36,7 +37,7 @@ public class FileService {
         }
     }
 
-    // Upload file
+    // Upload book thumbnail
     public String uploadBookThumbnail(String id, MultipartFile file) {
         // Create book thumbnail path if not exist
         createFolder(bookThumbnailsPath.toString());
@@ -53,6 +54,28 @@ public class FileService {
             stream.close();
 
             return bookThumbnailsPath + "/" + id;
+        } catch (Exception e) {
+            throw new StorageException("Errors occur while uploading file");
+        }
+    }
+
+    // Upload user avatar
+    public String uploadUserAvatar(String id, MultipartFile file) {
+        // Create user avatar path if not exist
+        createFolder(userAvatarsPath.toString());
+
+        // Validate file
+        validate(file);
+
+        // Create path of file
+        File fileServer = new File(userAvatarsPath + "/" + id);
+        try {
+            // Use Buffer to store data
+            BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(fileServer));
+            stream.write(file.getBytes());
+            stream.close();
+
+            return userAvatarsPath + "/" + id;
         } catch (Exception e) {
             throw new StorageException("Errors occur while uploading file");
         }

@@ -1,6 +1,6 @@
 package vn.techmaster.bookonline.annotation;
 
-import vn.techmaster.bookonline.validator.UniqueUsernamelValidator;
+import vn.techmaster.bookonline.validator.UniqueUsernameValidator;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
@@ -13,7 +13,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 @Target({ FIELD })
 @Retention(RUNTIME)
-@Constraint(validatedBy = UniqueUsernamelValidator.class)
+@Constraint(validatedBy = UniqueUsernameValidator.class)
 @Documented
 public @interface UniqueUsername {
     String message() default "Invalid";

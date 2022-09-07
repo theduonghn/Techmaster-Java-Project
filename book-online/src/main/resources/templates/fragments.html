@@ -77,7 +77,7 @@
                 <a class="nav-link" th:href="@{/contact}">Contact Us</a>
               </li>
 
-              <li class="nav-item dropdown">
+              <li sec:authorize="hasRole('ADMIN')" class="nav-item dropdown">
                 <a
                     class="nav-link dropdown-toggle"
                     href="#"
@@ -113,7 +113,7 @@
               </li>
             </ul>
 
-            <!-- Icons -->
+            <!-- Right part of navbar -->
             <ul class="navbar-nav d-flex flex-row me-1">
               <!-- Cart -->
               <li class="nav-item me-3 me-lg-0">
@@ -122,12 +122,30 @@
                 </a>
               </li>
               <!-- User -->
-              <li class="nav-item dropdown">
+              <li sec:authorize="hasRole('USER')" class="nav-item dropdown">
                 <a
                   class="nav-link"
-                    href="#"
+                  href="/profile"
                 >
                   <i class="fa-solid fa-user"> </i>
+                </a>
+              </li>
+              <!-- Register -->
+              <li sec:authorize="not isAuthenticated()" class="nav-item me-3 me-lg-0">
+                <a class="nav-link" th:href="@{/register}"
+                  >Register
+                </a>
+              </li>
+              <!-- Login -->
+              <li sec:authorize="not isAuthenticated()" class="nav-item me-3 me-lg-0">
+                <a class="nav-link" th:href="@{/login}"
+                  >Login
+                </a>
+              </li>
+              <!-- Logout -->
+              <li sec:authorize="isAuthenticated()" class="nav-item me-3 me-lg-0">
+                <a class="nav-link" th:href="@{/logout}"
+                  >Logout
                 </a>
               </li>
             </ul>

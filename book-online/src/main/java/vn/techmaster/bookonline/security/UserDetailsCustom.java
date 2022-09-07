@@ -20,6 +20,10 @@ import java.util.List;
 public class UserDetailsCustom implements UserDetails {
     private User user;
 
+    public User getUser() {
+        return user;
+    }
+
     public String getFullName() {
         return user.getFullName();
     }

@@ -3,8 +3,10 @@ package vn.techmaster.bookonline.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import vn.techmaster.bookonline.dto.RegisterRequest;
+import vn.techmaster.bookonline.dto.UserUpdateRequest;
 import vn.techmaster.bookonline.entity.*;
 import vn.techmaster.bookonline.exception.NotFoundException;
 import vn.techmaster.bookonline.repository.UserRepository;
@@ -15,6 +17,12 @@ import java.util.List;
 public class UserService {
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private FileService fileService;
+
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
     // Find by id
     public User findById(String id) {
@@ -37,10 +45,44 @@ public class UserService {
 
         user.setUsername(registerRequest.getUsername());
         user.setEmail(registerRequest.getEmail());
-        user.setPassword(registerRequest.getPassword());
+        user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
         user.setFullName(registerRequest.getFullName());
         user.setStatus(Status.ACTIVE);
         user.setRoles(List.of("USER"));
+
+        return userRepository.save(user);
+    }
+
+    // Map userUpdateRequest from entity
+    public UserUpdateRequest mapUserUpdateRequestEntity(User user) {
+        UserUpdateRequest userUpdateRequest = new UserUpdateRequest();
+
+        userUpdateRequest.setId(user.getId());
+        userUpdateRequest.setAvatar(user.getAvatar());
+        userUpdateRequest.setFullName(user.getFullName());
+        userUpdateRequest.setMobile(user.getMobile());
+        userUpdateRequest.setGender(user.getGender());
+        userUpdateRequest.setDob(user.getDob());
+        userUpdateRequest.setHomeAddress(user.getHomeAddress());
+        userUpdateRequest.setWorkAddress(user.getWorkAddress());
+
+        return userUpdateRequest;
+    }
+
+    // Save entity by userUpdateRequest
+    public User saveByUserUpdateRequest(UserUpdateRequest userUpdateRequest, String id) {
+        User user = findById(id);
+
+        if (!userUpdateRequest.getMultipartFile().isEmpty()) {
+            user.setAvatar(
+                    fileService.uploadUserAvatar(user.getId(), userUpdateRequest.getMultipartFile()));
+        }
+        user.setFullName(userUpdateRequest.getFullName());
+        user.setMobile(userUpdateRequest.getMobile());
+        user.setGender(userUpdateRequest.getGender());
+        user.setDob(userUpdateRequest.getDob());
+        user.setHomeAddress(userUpdateRequest.getHomeAddress());
+        user.setWorkAddress(userUpdateRequest.getWorkAddress());
 
         return userRepository.save(user);
     }
