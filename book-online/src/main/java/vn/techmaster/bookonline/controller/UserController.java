@@ -27,7 +27,7 @@ public class UserController {
     public String showProfilePage(Model model) {
         UserDetailsCustom userDetailsCustom =
                 (UserDetailsCustom) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User user = userDetailsCustom.getUser();
+        User user = userService.findById(userDetailsCustom.getUser().getId());
         model.addAttribute("user", user);
         return "profile";
     }
@@ -37,7 +37,7 @@ public class UserController {
     public String showUpdateProfilePage(Model model) {
         UserDetailsCustom userDetailsCustom =
                 (UserDetailsCustom) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User user = userDetailsCustom.getUser();
+        User user = userService.findById(userDetailsCustom.getUser().getId());
         UserUpdateRequest userUpdateRequest = userService.mapUserUpdateRequestEntity(user);
         model.addAttribute("userUpdateRequest", userUpdateRequest);
         return "profile-update";
@@ -56,7 +56,7 @@ public class UserController {
 
         UserDetailsCustom userDetailsCustom =
                 (UserDetailsCustom) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User user = userDetailsCustom.getUser();
+        User user = userService.findById(userDetailsCustom.getUser().getId());
 
         userService.saveByUserUpdateRequest(userUpdateRequest, user.getId());
 
