@@ -45,7 +45,7 @@ public class User implements Serializable {
     private String fullName;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "gender", nullable = false)
+    @Column(name = "gender")
     private Gender gender;
 
     @Column(name = "dob")

@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import vn.techmaster.bookonline.entity.Comment;
-import vn.techmaster.bookonline.entity.User;
+import vn.techmaster.bookonline.dto.RegisterRequest;
+import vn.techmaster.bookonline.entity.*;
 import vn.techmaster.bookonline.exception.NotFoundException;
 import vn.techmaster.bookonline.repository.UserRepository;
 
@@ -28,6 +28,20 @@ public class UserService {
 
     // Save entity
     public User save(User user) {
+        return userRepository.save(user);
+    }
+
+    // Save entity by registerRequest
+    public User saveByRegisterRequest(RegisterRequest registerRequest) {
+        User user = new User();
+
+        user.setUsername(registerRequest.getUsername());
+        user.setEmail(registerRequest.getEmail());
+        user.setPassword(registerRequest.getPassword());
+        user.setFullName(registerRequest.getFullName());
+        user.setStatus(Status.ACTIVE);
+        user.setRoles(List.of("USER"));
+
         return userRepository.save(user);
     }
 
@@ -56,5 +70,15 @@ public class UserService {
     // Find all, pageable order by username
     public Page<User> findByOrderByUsernameAsc(Pageable pageable) {
         return userRepository.findByOrderByUsernameAsc(pageable);
+    }
+
+    // Check exists by email
+    public boolean existsByEmail(String email) {
+        return userRepository.existsByEmailIgnoreCase(email);
+    }
+
+    // Check exists by username
+    public boolean existsByUsername(String username) {
+        return userRepository.existsByUsernameIgnoreCase(username);
     }
 }
