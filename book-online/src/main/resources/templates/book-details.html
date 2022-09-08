@@ -16,6 +16,14 @@
       <!-- Header -->
       <header th:replace="fragments :: header"></header>
 
+      <!-- BEGIN success alert -->
+      <div th:replace="fragments :: successAlert"></div>
+      <!-- END success alert -->
+
+      <!-- BEGIN danger alert -->
+      <div th:replace="fragments :: dangerAlert"></div>
+      <!-- END danger alert -->
+
       <!-- Main -->
       <div id="main">
         <div class="inner">
@@ -76,30 +84,29 @@
                 </p>
 
                 <p>Stock: <span th:text="${book.quantity}"> 2000 </span></p>
-
-                <div class="row">
-                  <div class="col-sm-8">
-                    <label class="control-label">Quantity</label>
-
-                    <div class="row">
-                      <div class="col-sm-6">
-                        <div class="form-group">
-                          <input type="text" name="name" id="name" />
-                        </div>
-                      </div>
-
-                      <div class="col-sm-6">
-                        <input
-                          type="submit"
-                          class="btn btn-secondary"
-                          value="Add to Cart"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
               </div>
             </div>
+
+            <form
+              sec:authorize="hasRole('USER')"
+              th:action="@{|/books/${book.id}/cartBooks/add|}"
+              th:object="${cartBookRequest}"
+              method="POST"
+            >
+              <div class="form-group">
+                <input
+                  type="text"
+                  th:field="*{quantity}"
+                  placeholder="Quantity"
+                />
+
+                <input
+                  type="submit"
+                  class="btn btn-secondary"
+                  value="Add to Cart"
+                />
+              </div>
+            </form>
           </div>
 
           <br />

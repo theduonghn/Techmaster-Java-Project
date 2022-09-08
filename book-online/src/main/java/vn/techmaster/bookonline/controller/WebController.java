@@ -7,17 +7,13 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import vn.techmaster.bookonline.dto.AuthorRequest;
+import vn.techmaster.bookonline.dto.CartBookRequest;
 import vn.techmaster.bookonline.dto.CommentRequest;
 import vn.techmaster.bookonline.entity.*;
 import vn.techmaster.bookonline.security.UserDetailsCustom;
-import vn.techmaster.bookonline.service.BookService;
-import vn.techmaster.bookonline.service.CategoryService;
-import vn.techmaster.bookonline.service.CommentService;
-import vn.techmaster.bookonline.service.UserService;
+import vn.techmaster.bookonline.service.*;
 import vn.techmaster.bookonline.util.Utils;
 
 import javax.validation.Valid;
@@ -28,6 +24,10 @@ import java.util.List;
 public class WebController {
     @Autowired
     private BookService bookService;
+    @Autowired
+    private CartService cartService;
+    @Autowired
+    private CartBookService cartBookService;
     @Autowired
     private CategoryService categoryService;
     @Autowired
@@ -95,6 +95,7 @@ public class WebController {
         model.addAttribute("booksSameAuthors", bookService.findSimilarByAuthors(book));
 
         model.addAttribute("commentRequest", new CommentRequest());
+        model.addAttribute("cartBookRequest", new CartBookRequest());
         return "book-details";
     }
 
@@ -120,6 +121,41 @@ public class WebController {
         return "redirect:/books/" + id;
     }
 
+    // Submit add cartBook
+    @PostMapping("/books/{bookId}/cartBooks/add")
+    public String submitAddCartBook(Model model,
+                                    @PathVariable String bookId,
+                                    @Valid @ModelAttribute CartBookRequest cartBookRequest,
+                                    BindingResult result,
+                                    RedirectAttributes redirectAttributes) {
+        if (result.hasErrors()) {
+            redirectAttributes.addFlashAttribute("dangerAlert", result.getFieldError().getDefaultMessage());
+            return "redirect:/books/" + bookId;
+        }
+
+        UserDetailsCustom userDetailsCustom =
+                (UserDetailsCustom) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = userService.findById(userDetailsCustom.getUser().getId());
+        Cart cart = cartService.findByUser(user);
+
+        Book book = bookService.findById(bookId);
+
+        cartBookService.saveByRequest(cartBookRequest, cart, book);
+
+        redirectAttributes.addFlashAttribute("successAlert", "Items added to cart!");
+        return "redirect:/books/" + bookId;
+    }
+
+    // Delete cartBook
+    @GetMapping("/cartBooks/{id}/delete")
+    public String deleteCartBook(Model model,
+                                 @PathVariable String id) {
+        CartBook cartBook = cartBookService.findById(id);
+        cartBookService.delete(cartBook);
+
+        return "redirect:/checkout";
+    }
+
     @GetMapping("/about")
     public String showAboutPage() {
         return "about";
@@ -130,19 +166,34 @@ public class WebController {
         return "contact";
     }
 
-    @GetMapping("/blog")
-    public String showBlogPage() {
-        return "blog";
-    }
-
     @GetMapping("/testimonials")
     public String showTestimonialsPage() {
         return "testimonials";
     }
 
     @GetMapping("/checkout")
-    public String showCheckoutPage() {
+    public String showCheckoutPage(Model model) {
+        UserDetailsCustom userDetailsCustom =
+                (UserDetailsCustom) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = userService.findById(userDetailsCustom.getUser().getId());
+        Cart cart = cartService.findByUser(user);
+        List<CartBook> cartBooks = cartBookService.findByCart(cart);
+        model.addAttribute("cartBooks", cartBooks);
         return "checkout";
+    }
+
+    // TODO
+    @GetMapping("/checkout/confirm")
+    public String showCheckoutConfirmPage() {
+        UserDetailsCustom userDetailsCustom =
+                (UserDetailsCustom) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = userService.findById(userDetailsCustom.getUser().getId());
+        Cart cart = cartService.findByUser(user);
+        List<CartBook> cartBooks = cartBookService.findByCart(cart);
+        for (CartBook cartBook : cartBooks) {
+            cartBookService.delete(cartBook);
+        }
+        return "checkout-confirm";
     }
 
     @GetMapping("/terms")

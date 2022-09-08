@@ -22,6 +22,7 @@ public class OrderBook {
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "org.hibernate.id.UUIDGenerator")
     private String id;
+
     @ManyToOne(optional = false)
     @JoinColumn(name = "book_id", nullable = false)
     private Book book;

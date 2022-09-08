@@ -21,6 +21,8 @@ public class MockDataInitializer {
     @Autowired
     private BookService bookService;
     @Autowired
+    private CartRepository cartRepository;
+    @Autowired
     private CategoryRepository categoryRepository;
     @Autowired
     private CommentRepository commentRepository;
@@ -59,7 +61,7 @@ public class MockDataInitializer {
         userRepository.save(admin);
         // End create admin
 
-        // Begin create active users
+        // Begin create active users and carts
         List<User> users = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
             User user = new User();
@@ -78,9 +80,15 @@ public class MockDataInitializer {
             user.setRoles(List.of("USER"));
 
             users.add(user);
+
+            userRepository.save(user);
+
+            Cart cart = new Cart();
+            cart.setUser(userService.findById(user.getId()));
+
+            cartRepository.save(cart);
         }
-        userRepository.saveAllAndFlush(users);
-        // End create active users
+        // End create active users and cart
 
         // Begin create authors
         List<Author> authors = new ArrayList<>();

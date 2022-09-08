@@ -92,11 +92,11 @@ public class Book {
     @JoinColumn(name = "publishing_company_id")
     private Publisher publisher;
 
-    @ManyToMany(mappedBy = "books")
-    private Set<Cart> carts = new LinkedHashSet<>();
-
     @OneToMany(mappedBy = "book")
     private Set<OrderBook> orderBooks = new LinkedHashSet<>();
+
+    @OneToMany(mappedBy = "book")
+    private Set<CartBook> cartBooks = new LinkedHashSet<>();
 
     @Override
     public boolean equals(Object o) {
