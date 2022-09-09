@@ -16,4 +16,9 @@ public class CartService {
     public Cart findByUser(User user) {
         return cartRepository.findByUser(user).orElseThrow(() -> new NotFoundException("No cart found"));
     }
+
+    // Save entity
+    public Cart save(Cart cart) {
+        return cartRepository.save(cart);
+    }
 }

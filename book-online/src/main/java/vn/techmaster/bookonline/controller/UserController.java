@@ -11,14 +11,18 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import vn.techmaster.bookonline.dto.RegisterRequest;
 import vn.techmaster.bookonline.dto.UserUpdateRequest;
+import vn.techmaster.bookonline.entity.Cart;
 import vn.techmaster.bookonline.entity.User;
 import vn.techmaster.bookonline.security.UserDetailsCustom;
+import vn.techmaster.bookonline.service.CartService;
 import vn.techmaster.bookonline.service.UserService;
 
 import javax.validation.Valid;
 
 @Controller
 public class UserController {
+    @Autowired
+    private CartService cartService;
     @Autowired
     private UserService userService;
 
@@ -82,7 +86,10 @@ public class UserController {
             return "register";
         }
 
-        userService.saveByRegisterRequest(registerRequest);
+        User user = userService.saveByRegisterRequest(registerRequest);
+        Cart cart = new Cart();
+        cart.setUser(user);
+        cartService.save(cart);
 
         redirectAttributes.addFlashAttribute("successAlert", "User register successfully!");
         return "redirect:/";
