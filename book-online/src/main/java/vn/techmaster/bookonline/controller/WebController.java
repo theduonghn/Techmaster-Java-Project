@@ -99,7 +99,6 @@ public class WebController {
         return "book-details";
     }
 
-    // Submit add comment
     @PostMapping("/books/{id}/comments/add")
     public String submitAddComment(Model model,
                                   @PathVariable String id,
@@ -121,7 +120,6 @@ public class WebController {
         return "redirect:/books/" + id;
     }
 
-    // Submit add cartBook
     @PostMapping("/books/{bookId}/cartBooks/add")
     public String submitAddCartBook(Model model,
                                     @PathVariable String bookId,
@@ -146,7 +144,6 @@ public class WebController {
         return "redirect:/books/" + bookId;
     }
 
-    // Delete cartBook
     @GetMapping("/cartBooks/{id}/delete")
     public String deleteCartBook(Model model,
                                  @PathVariable String id) {
@@ -179,6 +176,7 @@ public class WebController {
         Cart cart = cartService.findByUser(user);
         List<CartBook> cartBooks = cartBookService.findByCart(cart);
         model.addAttribute("cartBooks", cartBooks);
+        model.addAttribute("totalPrice", cartService.getTotalPrice(cart));
         return "checkout";
     }
 

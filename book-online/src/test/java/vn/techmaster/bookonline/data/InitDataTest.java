@@ -1,4 +1,4 @@
-package vn.techmaster.bookonline.repository;
+package vn.techmaster.bookonline.data;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

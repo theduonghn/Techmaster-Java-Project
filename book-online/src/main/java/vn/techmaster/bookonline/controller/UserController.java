@@ -26,7 +26,6 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    // Show profile page
     @GetMapping("/profile")
     public String showProfilePage(Model model) {
         UserDetailsCustom userDetailsCustom =
@@ -36,7 +35,6 @@ public class UserController {
         return "profile";
     }
 
-    // Show update profile page
     @GetMapping("/profile/update")
     public String showUpdateProfilePage(Model model) {
         UserDetailsCustom userDetailsCustom =
@@ -47,7 +45,6 @@ public class UserController {
         return "profile-update";
     }
 
-    // Submit update profile
     @PostMapping("/profile/update")
     public String submitUpdateProfilePage(Model model,
                                           @Valid @ModelAttribute UserUpdateRequest userUpdateRequest,
@@ -68,14 +65,12 @@ public class UserController {
         return "redirect:/profile";
     }
 
-    // Show register page
     @GetMapping("/register")
     public String showRegisterPage(Model model) {
         model.addAttribute("registerRequest", new RegisterRequest());
         return "register";
     }
 
-    // Submit register
     @PostMapping("/register")
     public String submitRegister(Model model,
                                  @Valid @ModelAttribute RegisterRequest registerRequest,

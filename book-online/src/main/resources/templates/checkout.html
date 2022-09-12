@@ -24,6 +24,7 @@
               <th scope="col">#</th>
               <th scope="col">Name</th>
               <th scope="col">Thumbnail</th>
+              <th scope="col">Price</th>
               <th scope="col">Quantity</th>
               <th scope="col">Options</th>
             </tr>
@@ -42,6 +43,10 @@
                   class="logo-small"
                 />
               </td>
+              <!-- Price -->
+              <td
+                th:text="|${#numbers.formatInteger(cartBook.book.price, 3, 'COMMA')} đ|"
+              ></td>
               <!-- Quantity -->
               <td th:text="${cartBook.quantity}"></td>
               <!-- Options -->
@@ -72,6 +77,14 @@
             </tr>
           </tbody>
         </table>
+
+        <!-- Total price -->
+        <p>
+          Total:
+          <span
+            th:text="|${#numbers.formatInteger(totalPrice, 3, 'COMMA')} đ|"
+          ></span>
+        </p>
 
         <form th:action="@{checkout/confirm}" method="GET">
           <button type="submit" class="btn btn-primary">Confirm</button>
